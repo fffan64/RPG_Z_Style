@@ -17,26 +17,25 @@ public class Destroyable : MonoBehaviour {
         anim = GetComponent<Animator>();
     }
 
-    // Detectamos la colisión con una corrutina
-    IEnumerator OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-
-        // Si es un ataque
         if (col.tag == "Attack")
         {
-
-            // Reproducimos la animación de destrucción y esperamos
-            anim.Play(destroyState);
-            yield return new WaitForSeconds(timeForDisable);
-
-            // Pasados los segundos de espera desactivamos los colliders 2D
-            foreach (Collider2D c in GetComponents<Collider2D>())
-            {
-                c.enabled = false;
-            }
-
+            StartCoroutine(DoDestroy());            
         }
+    }
 
+    private IEnumerator DoDestroy()
+    {
+        // Reproducimos la animación de destrucción y esperamos
+        anim.Play(destroyState);
+        yield return new WaitForSeconds(timeForDisable);
+
+        // Pasados los segundos de espera desactivamos los colliders 2D
+        foreach (Collider2D c in GetComponents<Collider2D>())
+        {
+            c.enabled = false;
+        }
     }
 
     void Update()

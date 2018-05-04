@@ -8,6 +8,13 @@ TagManager:
   - Attack
   - Object
   - Enemy
+  - HUD_Top
+  - HUD_LVL_1
+  - HUD_LVL_2
+  - HUD_XP_BAR
+  - HUD_HP_1
+  - HUD_HP_2
+  - HUD_HP_3
   layers:
   - Default
   - TransparentFX

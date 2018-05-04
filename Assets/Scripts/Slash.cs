@@ -17,6 +17,7 @@ public class Slash : MonoBehaviour {
         transform.position += new Vector3(mov.x, mov.y, 0f) * speed * Time.deltaTime;
 	}
 
+    /*
     private IEnumerator OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Object")
@@ -31,5 +32,27 @@ public class Slash : MonoBehaviour {
             }
             Destroy(gameObject);
         }
+    }*/
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Object")
+        {
+            StartCoroutine(DoDestroy());
+        }
+        else if (col.tag != "Player" && col.tag != "Attack")
+        {
+            if (col.tag == "Enemy")
+            {
+                col.SendMessage("Attacked");
+            }
+            Destroy(gameObject);
+        }
+    }
+
+    IEnumerator DoDestroy()
+    {
+        yield return new WaitForSeconds(waitBeforeDestroy);
+        Destroy(gameObject);
     }
 }

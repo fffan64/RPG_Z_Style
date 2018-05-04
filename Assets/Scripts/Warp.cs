@@ -24,6 +24,7 @@ public class Warp : MonoBehaviour {
         area = GameObject.FindGameObjectWithTag("Area");
     }
 
+    /*
     IEnumerator OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
@@ -39,6 +40,28 @@ public class Warp : MonoBehaviour {
             other.GetComponent<Player>().enabled = true;
             StartCoroutine(area.GetComponent<Area>().ShowArea(targetMap.name));
         }
+    }
+    */
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            StartCoroutine(DoWarp(other));
+        }
+    }
+
+    private IEnumerator DoWarp(Collider2D other)
+    {
+        other.GetComponent<Animator>().enabled = false;
+        other.GetComponent<Player>().enabled = false;
+        FadeIn();
+        yield return new WaitForSeconds(fadeTime);
+        other.transform.position = target.transform.GetChild(0).transform.position;
+        Camera.main.GetComponent<MainCamera>().SetBound(targetMap);
+        FadeOut();
+        other.GetComponent<Animator>().enabled = true;
+        other.GetComponent<Player>().enabled = true;
+        StartCoroutine(area.GetComponent<Area>().ShowArea(targetMap.name));
     }
 
     private void OnGUI()

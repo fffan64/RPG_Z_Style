@@ -10,7 +10,7 @@ public class Enemy_Log : MonoBehaviour {
 
     GameObject player;
 
-    Vector3 initialPosition, target;
+    Vector3 initialPosition, target, localScale;
 
     Animator anim;
     Rigidbody2D rb2d;
@@ -25,6 +25,8 @@ public class Enemy_Log : MonoBehaviour {
     public int maxHp = 3;
     [Tooltip("Current Health Points")]
     public int hp;
+    [Tooltip("Experience Points given when defeated")]
+    public int xp = 10;
 
     private void Start()
     {
@@ -36,6 +38,8 @@ public class Enemy_Log : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D>();
 
         hp = maxHp;
+
+        localScale = transform.GetChild(0).transform.localScale;
     }
 
     private void Update()
@@ -90,6 +94,10 @@ public class Enemy_Log : MonoBehaviour {
         }
 
         Debug.DrawLine(transform.position, target, Color.green);
+
+        //Update healthbar
+        localScale.x = Mathf.Clamp((float)(hp) / maxHp, 0f, 1f);
+        transform.GetChild(0).transform.localScale = localScale;
     }
 
     private void OnDrawGizmosSelected()
@@ -114,6 +122,7 @@ public class Enemy_Log : MonoBehaviour {
     {
         if(--hp <= 0)
         {
+            player.SendMessage("AddXp", xp);
             Destroy(gameObject);
         }
     }

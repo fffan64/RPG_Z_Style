@@ -35,6 +35,10 @@ public class Rock : MonoBehaviour {
     {
         if(col.transform.tag == "Player" || col.transform.tag == "Attack")
         {
+            if(col.transform.tag == "Player")
+            {
+                col.SendMessage("Attacked");
+            }
             Destroy(gameObject);
         }
     }
