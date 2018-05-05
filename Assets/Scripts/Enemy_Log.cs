@@ -43,6 +43,8 @@ public class Enemy_Log : MonoBehaviour {
         hp = maxHp;
 
         localScale = transform.GetChild(0).transform.localScale;
+
+        enabled = false;
     }
 
     private void Update()
@@ -133,10 +135,23 @@ public class Enemy_Log : MonoBehaviour {
         }
     }
 
+    /*
     private void OnGUI()
     {
         Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
 
         GUI.Box(new Rect(pos.x - 20, Screen.height - pos.y + 60, 40, 24), hp + "/" + maxHp);
+    }
+    */
+
+    private void OnBecameInvisible()
+    {
+        //Debug.Log("Became invisible");
+        enabled = false;
+    }
+    private void OnBecameVisible()
+    {
+        //Debug.Log("Became visible");
+        enabled = true;
     }
 }

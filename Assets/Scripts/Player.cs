@@ -228,6 +228,5 @@ public class Player : MonoBehaviour {
     IEnumerator DoDeath()
     {
         yield return new WaitForSeconds(5f);
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

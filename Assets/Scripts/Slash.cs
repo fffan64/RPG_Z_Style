@@ -11,9 +11,14 @@ public class Slash : MonoBehaviour {
     public Vector2 mov;
 
     public float speed;
-    
-	// Update is called once per frame
-	void Update () {
+
+    private void Awake()
+    {
+        FindObjectOfType<AudioManager>().Play("Sword_Magic");
+    }
+
+    // Update is called once per frame
+    void Update () {
         transform.position += new Vector3(mov.x, mov.y, 0f) * speed * Time.deltaTime;
 	}
 
@@ -46,6 +51,7 @@ public class Slash : MonoBehaviour {
             {
                 col.SendMessage("Attacked");
             }
+            FindObjectOfType<AudioManager>().Stop("Sword_Magic");
             Destroy(gameObject);
         }
     }
@@ -53,6 +59,13 @@ public class Slash : MonoBehaviour {
     IEnumerator DoDestroy()
     {
         yield return new WaitForSeconds(waitBeforeDestroy);
+        FindObjectOfType<AudioManager>().Stop("Sword_Magic");
         Destroy(gameObject);
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+        FindObjectOfType<AudioManager>().Stop("Sword_Magic");
     }
 }
