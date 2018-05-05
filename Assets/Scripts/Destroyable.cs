@@ -9,6 +9,8 @@ public class Destroyable : MonoBehaviour {
     // Variable con los segundos a esperar antes de desactivar la colisión
     public float timeForDisable;
 
+    public string[] destroySoundNames;
+
     // Animador para controlar la animación
     Animator anim;
 
@@ -29,6 +31,7 @@ public class Destroyable : MonoBehaviour {
     {
         // Reproducimos la animación de destrucción y esperamos
         anim.Play(destroyState);
+        FindObjectOfType<AudioManager>().PlayRandom(destroySoundNames);
         yield return new WaitForSeconds(timeForDisable);
 
         // Pasados los segundos de espera desactivamos los colliders 2D

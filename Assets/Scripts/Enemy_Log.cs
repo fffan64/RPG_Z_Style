@@ -28,6 +28,9 @@ public class Enemy_Log : MonoBehaviour {
     [Tooltip("Experience Points given when defeated")]
     public int xp = 10;
 
+    [Tooltip("Attack power (in HP)")]
+    public int damage = 1;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -112,7 +115,8 @@ public class Enemy_Log : MonoBehaviour {
         attacking = true;
         if(target != initialPosition && projPrefab != null)
         {
-            Instantiate(projPrefab, transform.position, transform.rotation);
+            Instantiate(projPrefab, transform.position, transform.rotation).SendMessage("SetDamage", damage);
+            FindObjectOfType<AudioManager>().Play("Shot");
             yield return new WaitForSeconds(seconds);
         }
         attacking = false;
@@ -120,9 +124,11 @@ public class Enemy_Log : MonoBehaviour {
 
     public void Attacked()
     {
-        if(--hp <= 0)
+        FindObjectOfType<AudioManager>().Play("Enemy_Log_Hurt");
+        if (--hp <= 0)
         {
             player.SendMessage("AddXp", xp);
+            FindObjectOfType<AudioManager>().Play("Poof");
             Destroy(gameObject);
         }
     }

@@ -25,7 +25,7 @@ public class Player : MonoBehaviour {
 
     public int[] levelUpXpNeeded;
 
-    GameObject hudTop;
+    GameObject hudPlayer;
 
     private bool xpChanged;
     private bool hpChanged;
@@ -34,9 +34,6 @@ public class Player : MonoBehaviour {
     {
         Assert.IsNotNull(initialMap);
         Assert.IsNotNull(slashPrefab);
-
-        hp = maxHp;
-        hudTop = GameObject.FindGameObjectWithTag("HUD_Top");
     }
 
     // Use this for initialization
@@ -51,9 +48,12 @@ public class Player : MonoBehaviour {
 
         aura = transform.GetChild(1).GetComponent<Aura>();
 
-        hudTop.GetComponent<HUD>().SetLevel(level);
-        hudTop.GetComponent<HUD>().SetXp(xp, levelUpXpNeeded[level]);
-        hudTop.GetComponent<HUD>().SetHp(hp, maxHp);
+        hp = maxHp;
+        hudPlayer = GameObject.FindGameObjectWithTag("HUD_Player");
+
+        hudPlayer.GetComponent<HUD>().SetLevel(level);
+        hudPlayer.GetComponent<HUD>().SetXp(xp, levelUpXpNeeded[level]);
+        hudPlayer.GetComponent<HUD>().SetHp(hp, maxHp);
     }
 
     // Update is called once per frame
@@ -99,6 +99,15 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void PlayFootStepLeft()
+    {
+        FindObjectOfType<AudioManager>().Play("Footstep1");
+    }
+    public void PlayFootStepRight()
+    {
+        FindObjectOfType<AudioManager>().Play("Footstep2");
+    }
+
     void SwordAttack()
     {
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
@@ -107,6 +116,8 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown("space") && !attacking)
         {
             anim.SetTrigger("attacking");
+            FindObjectOfType<AudioManager>().PlayRandom("Sword_attack_1", "Sword_attack_2", "Sword_attack_3");
+            //FindObjectOfType<AudioManager>().Play("Sword_attack_1");
         }
 
         if (mov != Vector2.zero)
@@ -183,29 +194,33 @@ public class Player : MonoBehaviour {
     {
         if(hpChanged)
         {
-            hudTop.GetComponent<HUD>().SetHp(hp, maxHp);
+            hudPlayer.GetComponent<HUD>().SetHp(hp, maxHp);
             hpChanged = false;
         }
         if(xp >= levelUpXpNeeded[level])
         {
             level++;
             //anim level up
-            hudTop.GetComponent<HUD>().SetLevel(level);
+            hudPlayer.GetComponent<HUD>().SetLevel(level);
         }
         if(xpChanged)
         {
-            hudTop.GetComponent<HUD>().SetXp(xp, levelUpXpNeeded[level]);
+            hudPlayer.GetComponent<HUD>().SetXp(xp, levelUpXpNeeded[level]);
             xpChanged = false;
         }
     }
 
-    public void Attacked()
+    public void Attacked(int damage)
     {
         hpChanged = true;
-        if (--hp <= 0)
+        hp -= damage;
+        FindObjectOfType<AudioManager>().Play("Player_Hurt");
+        GetComponent<BlinkingFX>().startBlinking = true;
+        if (hp <= 0)
         {
             //Destroy(gameObject);
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
+            Debug.Log("DEAD !");
             StartCoroutine(DoDeath());
         }
     }

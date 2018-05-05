@@ -10,6 +10,7 @@ public class Rock : MonoBehaviour {
     GameObject player;
     Rigidbody2D rb2d;
     Vector3 target, dir;
+    public int damage = 1;
 
     private void Start()
     {
@@ -37,7 +38,7 @@ public class Rock : MonoBehaviour {
         {
             if(col.transform.tag == "Player")
             {
-                col.SendMessage("Attacked");
+                col.SendMessage("Attacked", damage);
             }
             Destroy(gameObject);
         }
@@ -46,5 +47,10 @@ public class Rock : MonoBehaviour {
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
-    }   
+    }
+
+    public void SetDamage(int damage)
+    {
+        this.damage = damage;
+    }
 }

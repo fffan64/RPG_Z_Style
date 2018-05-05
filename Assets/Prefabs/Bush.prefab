@@ -112,6 +112,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyState: Bush_Destroy
   timeForDisable: 0.1
+  destroySoundNames:
+  - Bush_Grass_Cut
 --- !u!212 &212454155190166260
 SpriteRenderer:
   m_ObjectHideFlags: 1

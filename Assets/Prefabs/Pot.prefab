@@ -90,6 +90,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyState: Pot_Destroy
   timeForDisable: 0.25
+  destroySoundNames:
+  - Pot_Shatter_1
+  - Pot_Shatter_2
+  - Pot_Shatter_3
 --- !u!114 &114413962198545676
 MonoBehaviour:
   m_ObjectHideFlags: 1
