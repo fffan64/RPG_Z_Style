@@ -9,6 +9,7 @@ public class HUD : MonoBehaviour {
     Image HUD_XP_BAR;
     List<Image> levels = new List<Image>();
     List<Image> hearts = new List<Image>();
+    List<Image> coins = new List<Image>();
 
     public Sprite[] allNumbers;
     public Sprite[] allHearts;
@@ -26,6 +27,11 @@ public class HUD : MonoBehaviour {
         for (int i = 0; i < HUDPLayer.transform.GetChild(0).GetChild(1).childCount; i++)
         {
             levels.Add(HUDPLayer.transform.GetChild(0).GetChild(1).GetChild(i).GetComponent<Image>());
+        }
+        //Get all coins images
+        for (int i = 0; i < HUDPLayer.transform.GetChild(1).childCount; i++)
+        {
+            coins.Add(HUDPLayer.transform.GetChild(1).GetChild(i).GetComponent<Image>());
         }
     }
 
@@ -48,6 +54,24 @@ public class HUD : MonoBehaviour {
     {
         float amount = (float)xp / xpForLevelUp;
         HUD_XP_BAR.fillAmount = Mathf.Clamp(amount, 0f, 1f);
+    }
+
+    public void SetCoin(int coin)
+    {
+        int hundred = coin / 100 % 10;
+        int decade = coin / 10 % 10;
+        int unit = coin % 10;
+
+        if (allNumbers.Length == 10)
+        {
+            coins[0].sprite = allNumbers[hundred];
+            coins[1].sprite = allNumbers[decade];
+            coins[2].sprite = allNumbers[unit];
+        }
+        else
+        {
+            Debug.LogError("Look like all sprites number for level are not set properly (0 to 9 sprites)");
+        }
     }
 
     public void SetHp(int hp, int maxHp)

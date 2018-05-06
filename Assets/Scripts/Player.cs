@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
     public int hp;
     public int xp;
     public int level = 1;
+    public int coin;
 
     public int[] levelUpXpNeeded;
 
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour {
 
     private bool xpChanged;
     private bool hpChanged;
+    private bool coinChanged;
     
     private void Awake()
     {
@@ -54,6 +56,7 @@ public class Player : MonoBehaviour {
         hudPlayer.GetComponent<HUD>().SetLevel(level);
         hudPlayer.GetComponent<HUD>().SetXp(xp, levelUpXpNeeded[level]);
         hudPlayer.GetComponent<HUD>().SetHp(hp, maxHp);
+        hudPlayer.GetComponent<HUD>().SetCoin(coin);
     }
 
     // Update is called once per frame
@@ -208,6 +211,11 @@ public class Player : MonoBehaviour {
             hudPlayer.GetComponent<HUD>().SetXp(xp, levelUpXpNeeded[level]);
             xpChanged = false;
         }
+        if (coinChanged)
+        {
+            hudPlayer.GetComponent<HUD>().SetCoin(coin);
+            coinChanged = false;
+        }
     }
 
     public void Attacked(int damage)
@@ -228,5 +236,18 @@ public class Player : MonoBehaviour {
     IEnumerator DoDeath()
     {
         yield return new WaitForSeconds(5f);
+    }
+
+    public void SetReplenishHP(int amount)
+    {
+        hp++;
+        hp = Mathf.Clamp(hp, 0, maxHp);
+        hpChanged = true;
+    }
+
+    public void SetAddCoin(int amount)
+    {
+        coin+=amount;
+        coinChanged = true;
     }
 }

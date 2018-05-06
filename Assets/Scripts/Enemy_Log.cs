@@ -31,6 +31,10 @@ public class Enemy_Log : MonoBehaviour {
     [Tooltip("Attack power (in HP)")]
     public int damage = 1;
 
+    public string destroyState;
+    public float timeForDisable = 0.25f;
+    bool defeated;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -49,57 +53,68 @@ public class Enemy_Log : MonoBehaviour {
 
     private void Update()
     {
-        target = initialPosition;
-
-        RaycastHit2D hit = Physics2D.Raycast(
-            transform.position,
-            player.transform.position - transform.position,
-            visionRadius,
-            1 << LayerMask.NameToLayer("Default")
-        );
-
-        Vector3 forward = transform.TransformDirection(player.transform.position - transform.position);
-        Debug.DrawRay(transform.position, forward, Color.red);
-
-        if(hit.collider != null)
+        if (defeated)
         {
-            if(hit.collider.tag == "Player")
+            AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName(destroyState) && stateInfo.normalizedTime >= 1)
             {
-                target = player.transform.position;
+                Destroy(gameObject);
             }
         }
-
-        float distance = Vector3.Distance(target, transform.position);
-        Vector3 dir = (target - transform.position).normalized;
-
-        if(target != initialPosition && distance < attackRadius)
+        else
         {
-            anim.SetFloat("movX", dir.x);
-            anim.SetFloat("movY", dir.y);
-            anim.Play("Enemy_Log_walk", -1, 0);
+            target = initialPosition;
 
-            if(!attacking)
+            RaycastHit2D hit = Physics2D.Raycast(
+                transform.position,
+                player.transform.position - transform.position,
+                visionRadius,
+                1 << LayerMask.NameToLayer("Default")
+            );
+
+            Vector3 forward = transform.TransformDirection(player.transform.position - transform.position);
+            Debug.DrawRay(transform.position, forward, Color.red);
+
+            if (hit.collider != null)
             {
-                StartCoroutine(Attack(attackSpeed));
+                if (hit.collider.tag == "Player")
+                {
+                    target = player.transform.position;
+                }
             }
-        } else
-        {
-            rb2d.MovePosition(transform.position + dir * speed * Time.deltaTime);
 
-            anim.speed = 1;
-            anim.SetFloat("movX", dir.x);
-            anim.SetFloat("movY", dir.y);
-            anim.SetBool("walking", true);
+            float distance = Vector3.Distance(target, transform.position);
+            Vector3 dir = (target - transform.position).normalized;
+
+            if (target != initialPosition && distance < attackRadius)
+            {
+                anim.SetFloat("movX", dir.x);
+                anim.SetFloat("movY", dir.y);
+                anim.Play("Enemy_Log_walk", -1, 0);
+
+                if (!attacking)
+                {
+                    StartCoroutine(Attack(attackSpeed));
+                }
+            }
+            else
+            {
+                rb2d.MovePosition(transform.position + dir * speed * Time.deltaTime);
+
+                anim.speed = 1;
+                anim.SetFloat("movX", dir.x);
+                anim.SetFloat("movY", dir.y);
+                anim.SetBool("walking", true);
+            }
+
+            if (target == initialPosition && distance < 0.05f)
+            {
+                transform.position = initialPosition;
+                anim.SetBool("walking", false);
+            }
+
+            Debug.DrawLine(transform.position, target, Color.green);            
         }
-
-        if(target == initialPosition && distance < 0.05f)
-        {
-            transform.position = initialPosition;
-            anim.SetBool("walking", false);
-        }
-
-        Debug.DrawLine(transform.position, target, Color.green);
-
         //Update healthbar
         localScale.x = Mathf.Clamp((float)(hp) / maxHp, 0f, 1f);
         transform.GetChild(0).transform.localScale = localScale;
@@ -130,19 +145,28 @@ public class Enemy_Log : MonoBehaviour {
         if (--hp <= 0)
         {
             player.SendMessage("AddXp", xp);
-            FindObjectOfType<AudioManager>().Play("Poof");
-            Destroy(gameObject);
+            StartCoroutine(DoDestroy());
         }
     }
 
-    /*
-    private void OnGUI()
+    private IEnumerator DoDestroy()
     {
-        Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
+        Debug.Log("DESTROY ENEMY LOG!");
+        defeated = true;
+        anim.Play("Enemy_Log_Defeated");
+        FindObjectOfType<AudioManager>().Play("Poof");
 
-        GUI.Box(new Rect(pos.x - 20, Screen.height - pos.y + 60, 40, 24), hp + "/" + maxHp);
+
+        // Pasados los segundos de espera desactivamos los colliders 2D
+        foreach (Collider2D c in GetComponents<Collider2D>())
+        {
+            c.enabled = false;
+        }
+
+        yield return new WaitForSeconds(timeForDisable);
+
+        
     }
-    */
 
     private void OnBecameInvisible()
     {

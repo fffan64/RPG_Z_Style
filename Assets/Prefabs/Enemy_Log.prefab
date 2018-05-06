@@ -199,6 +199,9 @@ MonoBehaviour:
   maxHp: 3
   hp: 0
   xp: 10
+  damage: 1
+  destroyState: Enemy_Log_Defeated
+  timeForDisable: 0.25
 --- !u!212 &212384533904678540
 SpriteRenderer:
   m_ObjectHideFlags: 1
