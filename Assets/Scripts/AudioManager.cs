@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour {
 
     public Sound[] sounds;
+    public AudioMixer audioMixer;
 
     public static AudioManager instance;
 
@@ -31,12 +32,18 @@ public class AudioManager : MonoBehaviour {
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
             s.source.playOnAwake = s.playOnAwake;
+            s.source.outputAudioMixerGroup = audioMixer.FindMatchingGroups("Master")[0];
         }
     }
 
     private void Start()
     {
         //
+    }
+
+    public void SetVolume(float volume)
+    {
+        audioMixer.SetFloat("volume", volume);
     }
 
     public void Play(string name)

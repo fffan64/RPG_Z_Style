@@ -28,12 +28,7 @@ public class MainCamera : MonoBehaviour {
         {
             Screen.SetResolution(800, 800, true);
         }
-
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit();
-        }
-
+        
         float posX = Mathf.Round(
             Mathf.SmoothDamp(transform.position.x,
                 target.position.x, ref velocity.x, smoothTime

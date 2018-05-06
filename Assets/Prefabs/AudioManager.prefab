@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4668949816285770}
   - component: {fileID: 114379691554956382}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,9 +52,158 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: PlayerDeath
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: Sword_attack_1
+    clip: {fileID: 8300000, guid: d05fc4d3e47af0140a7e8450c44b9077, type: 3}
+    volume: 0.5
+    pitch: 1
     loop: 0
+    playOnAwake: 0
     source: {fileID: 0}
+  - name: Sword_attack_2
+    clip: {fileID: 8300000, guid: 7eddc2663afab7f41acc499b71709c83, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Sword_attack_3
+    clip: {fileID: 8300000, guid: d44392e19d32c8d45a5c20c5bcb7c418, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Pot_Shatter_1
+    clip: {fileID: 8300000, guid: a0dec840067053c4aa5edf522115ae10, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Pot_Shatter_2
+    clip: {fileID: 8300000, guid: c99dd84215d9da44aab69e0f831e7b53, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Pot_Shatter_3
+    clip: {fileID: 8300000, guid: 9da18d4b617598646bcbc6aa86853534, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Bush_Grass_Cut
+    clip: {fileID: 8300000, guid: 820e8e923b42c8c44a9ecbdaf0064ec9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Throwing
+    clip: {fileID: 8300000, guid: acf1c5729fe9e384ea501282ef94f908, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Poof
+    clip: {fileID: 8300000, guid: 5d39a47de1caba143bfbfd15dae300ec, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Shot
+    clip: {fileID: 8300000, guid: 52252c2a3038bf940936afbae1823e59, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Enemy_Log_Hurt
+    clip: {fileID: 8300000, guid: 0395b1b8b777ee14bb23195efc7f04a1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Player_Hurt
+    clip: {fileID: 8300000, guid: 82fd5334e5901874b8317222f5e7abea, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Footstep1
+    clip: {fileID: 8300000, guid: 8cb2479979af2544baa68b99d55bd232, type: 3}
+    volume: 0.1
+    pitch: 0.1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Footstep2
+    clip: {fileID: 8300000, guid: 4b8b8dbb2f08d244db3a496144a6dcf5, type: 3}
+    volume: 0.1
+    pitch: 0.1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Theme_1
+    clip: {fileID: 8300000, guid: 3639f506a23b87445bdc744ea0360fc9, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Sword_Charging
+    clip: {fileID: 8300000, guid: 2f8e6d3545489674180cde9522099f21, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Sword_Magic
+    clip: {fileID: 8300000, guid: 6d14be65a791fe2448fd36663c4a4929, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Sword_Magic_Ready
+    clip: {fileID: 8300000, guid: 3576dcb2803878c46a35416ea9cc913d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: MainMenuTheme
+    clip: {fileID: 8300000, guid: dd89f5f9d65828949894105a2a7c67b9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: UI_Highlight
+    clip: {fileID: 8300000, guid: 09dbdeb5b40226b4a80b1386284e7799, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: UI_Select
+    clip: {fileID: 8300000, guid: 6c612cfed5dc06e48b9e43f4a8062d02, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: UI_Cancel
+    clip: {fileID: 8300000, guid: a9df65f8a941373408740e738e022a86, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 451d06667d859114387020cf37746b23, type: 2}

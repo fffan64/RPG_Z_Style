@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
 
     private bool xpChanged;
     private bool hpChanged;
-
+    
     private void Awake()
     {
         Assert.IsNotNull(initialMap);
