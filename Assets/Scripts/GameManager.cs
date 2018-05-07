@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
     bool gameHasEnded = false;
     public float restartDelay = 2f;
 
+    public GameObject hudPlayer;
+
     private void Awake()
     {
         if (instance == null)
@@ -32,7 +34,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        InitGame();
+        MainMenu();
     }
 
     private void Update()
@@ -53,19 +55,14 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
-
-    void InitGame()
-    {
-        Debug.Log("GAME INIT!");
-        FindObjectOfType<AudioManager>().Play("MainMenuTheme");
-    }
-
+    
     public void PlayGame()
     {
         mainMenuUI.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         FindObjectOfType<AudioManager>().Stop("MainMenuTheme");
         FindObjectOfType<AudioManager>().Play("Theme_1");
+        hudPlayer.SendMessage("ShowHUD");
     }
     
     public void QuitGame()
@@ -107,8 +104,9 @@ public class GameManager : MonoBehaviour {
     public void MainMenu()
     {
         Debug.Log("MAIN MENU!");
+        hudPlayer.SendMessage("HideHUD");
         Resume();
-        FindObjectOfType<AudioManager>().Stop("Theme_1");
+        FindObjectOfType<AudioManager>().StopGlobal();
         SceneManager.LoadScene(0);
         FindObjectOfType<AudioManager>().Play("MainMenuTheme");
         mainMenuUI.SetActive(true);

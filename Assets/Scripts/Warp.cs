@@ -7,6 +7,7 @@ public class Warp : MonoBehaviour {
 
     public GameObject target;
     public GameObject targetMap;
+    public bool disablePlayerHUD;
 
     bool start = false;
     bool isFadeIn = true;
@@ -14,6 +15,7 @@ public class Warp : MonoBehaviour {
     float fadeTime = 1f;
 
     GameObject area;
+    GameObject hudPlayer;
 
     private void Awake()
     {
@@ -22,6 +24,7 @@ public class Warp : MonoBehaviour {
         transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
         Assert.IsNotNull(targetMap);
         area = GameObject.FindGameObjectWithTag("Area");
+        hudPlayer = GameObject.FindGameObjectWithTag("HUD_Player");
     }
 
     /*
@@ -61,6 +64,13 @@ public class Warp : MonoBehaviour {
         FadeOut();
         other.GetComponent<Animator>().enabled = true;
         other.GetComponent<Player>().enabled = true;
+        if (disablePlayerHUD)
+        {
+            hudPlayer.SendMessage("HideHUD");
+        } else
+        {
+            hudPlayer.SendMessage("ShowHUD");
+        }
         StartCoroutine(area.GetComponent<Area>().ShowArea(targetMap.name));
     }
 

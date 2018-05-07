@@ -6,13 +6,16 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour {
 
     GameObject HUDPLayer;
+
     Image HUD_XP_BAR;
     List<Image> levels = new List<Image>();
     List<Image> hearts = new List<Image>();
     List<Image> coins = new List<Image>();
 
+    public bool hideHUD;
     public Sprite[] allNumbers;
     public Sprite[] allHearts;
+
 
     private void Awake()
     {
@@ -33,6 +36,16 @@ public class HUD : MonoBehaviour {
         {
             coins.Add(HUDPLayer.transform.GetChild(1).GetChild(i).GetComponent<Image>());
         }
+    }
+
+    public void ShowHUD()
+    {
+        GetComponent<Canvas>().enabled = true;
+    }
+
+    public void HideHUD()
+    {
+        GetComponent<Canvas>().enabled = false;
     }
 
     public void SetLevel(int level)

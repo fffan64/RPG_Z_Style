@@ -102,6 +102,11 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
+    public void StopGlobal()
+    {
+        System.Array.ForEach(sounds, s => s.source.Stop());
+    }
+
     public void PlayRandom(params string[] names)
     {
         List<Sound> sToPlayRandom = new List<Sound>();

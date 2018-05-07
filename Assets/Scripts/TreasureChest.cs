@@ -10,29 +10,32 @@ public class TreasureChest : MonoBehaviour {
     bool playerInRange;
     Vector3 posPlayer;
     public GameObject loot;
+    public string openingState;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         anim = GetComponent<Animator>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (playerInRange && !opened)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 anim.SetTrigger("opening");
                 GetComponents<BoxCollider2D>()[1].enabled = false;
-                Instantiate(loot, posPlayer, Quaternion.AngleAxis(0f,Vector3.zero));
             }
         }
-	}
+    }
 
     public void SetOpened()
     {
         opened = true;
         anim.SetBool("open", true);
+
+        Instantiate(loot, posPlayer, Quaternion.AngleAxis(0f, Vector3.zero));
     }
 
     private void OnTriggerEnter2D(Collider2D col)

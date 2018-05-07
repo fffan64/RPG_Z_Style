@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loot: {fileID: 0}
+  openingState: Treasure_Chest_Opening
 --- !u!212 &212962754592771316
 SpriteRenderer:
   m_ObjectHideFlags: 1
