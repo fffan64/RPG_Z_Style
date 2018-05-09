@@ -152,7 +152,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Theme_1
     clip: {fileID: 8300000, guid: 3639f506a23b87445bdc744ea0360fc9, type: 3}
-    volume: 0.75
+    volume: 0.45
     pitch: 1
     loop: 1
     playOnAwake: 0
@@ -186,21 +186,63 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - name: UI_Highlight
-    clip: {fileID: 8300000, guid: 09dbdeb5b40226b4a80b1386284e7799, type: 3}
+    clip: {fileID: 8300000, guid: bfcfcd6d55dba1c4080545aadba3726b, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
   - name: UI_Select
-    clip: {fileID: 8300000, guid: 6c612cfed5dc06e48b9e43f4a8062d02, type: 3}
+    clip: {fileID: 8300000, guid: 759f835ed5406f3499e4ca2974156df0, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
   - name: UI_Cancel
-    clip: {fileID: 8300000, guid: a9df65f8a941373408740e738e022a86, type: 3}
+    clip: {fileID: 8300000, guid: e82827b9227fba64c95475523acf28d5, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Heart
+    clip: {fileID: 8300000, guid: f69d0cdd32c9e6b43874d5f23890638a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Coin
+    clip: {fileID: 8300000, guid: bb3747c5a2b58074696f39df7bad4277, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Chest
+    clip: {fileID: 8300000, guid: afa62e642e49fd54aae844ecd4138993, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: UI_StartGame
+    clip: {fileID: 8300000, guid: e1f6d38116ccddf4a9fb226bc093e72e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: UI_Pause
+    clip: {fileID: 8300000, guid: 51fe03723bc701840bdc9921afa3d853, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: UI_UnPause
+    clip: {fileID: 8300000, guid: 6859360dce66bcb43ac388418ffbcaba, type: 3}
     volume: 1
     pitch: 1
     loop: 0

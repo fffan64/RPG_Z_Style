@@ -21,9 +21,11 @@ public class PickUp : MonoBehaviour {
             {
                 case TypePickup.HP_REPLENISH:
                     col.SendMessage("SetReplenishHP", amount);
+                    FindObjectOfType<AudioManager>().Play("Heart");
                     break;
                 case TypePickup.COIN:
                     col.SendMessage("SetAddCoin", amount);
+                    FindObjectOfType<AudioManager>().Play("Coin");
                     break;
                 default:
                     break;

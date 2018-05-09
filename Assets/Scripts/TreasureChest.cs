@@ -25,6 +25,7 @@ public class TreasureChest : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 anim.SetTrigger("opening");
+                FindObjectOfType<AudioManager>().Play("Chest");
                 GetComponents<BoxCollider2D>()[1].enabled = false;
             }
         }

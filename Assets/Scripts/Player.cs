@@ -62,17 +62,20 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        Movements();
+        if (!FindObjectOfType<GameManager>().gameIsPaused)
+        {
+            Movements();
 
-        Animations();
+            Animations();
 
-        SwordAttack();
+            SwordAttack();
 
-        SlashAttack();
+            SlashAttack();
 
-        PreventMovement();
+            PreventMovement();
 
-        UpdateHUD();
+            UpdateHUD();
+        }
     }
 
     private void FixedUpdate()
