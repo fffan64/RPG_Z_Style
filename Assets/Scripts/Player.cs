@@ -206,7 +206,8 @@ public class Player : MonoBehaviour {
         if(xp >= levelUpXpNeeded[level])
         {
             level++;
-            //anim level up
+            FindObjectOfType<AudioManager>().Play("UI_LevelUp");
+            hudPlayer.GetComponent<Animator>().SetTrigger("levelup");
             hudPlayer.GetComponent<HUD>().SetLevel(level);
         }
         if(xpChanged)

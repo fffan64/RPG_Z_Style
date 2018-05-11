@@ -20,16 +20,16 @@ public class HUD : MonoBehaviour {
     private void Awake()
     {
         HUDPLayer = GameObject.FindGameObjectWithTag("HUD_Player");
-        HUD_XP_BAR = HUDPLayer.transform.GetChild(0).GetChild(2).GetComponent<Image>();
+        HUD_XP_BAR = HUDPLayer.transform.GetChild(0).GetChild(1).GetComponent<Image>();
         //Get all hearts images
         for(int i = 0; i < HUDPLayer.transform.GetChild(0).GetChild(0).childCount; i++)
         {
             hearts.Add(HUDPLayer.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Image>());
         }
-        //Get all level images
-        for (int i = 0; i < HUDPLayer.transform.GetChild(0).GetChild(1).childCount; i++)
+        //Get all level images - skipping first FX
+        for (int i = 1; i < HUDPLayer.transform.GetChild(0).GetChild(2).childCount; i++)
         {
-            levels.Add(HUDPLayer.transform.GetChild(0).GetChild(1).GetChild(i).GetComponent<Image>());
+            levels.Add(HUDPLayer.transform.GetChild(0).GetChild(2).GetChild(i).GetComponent<Image>());
         }
         //Get all coins images
         for (int i = 0; i < HUDPLayer.transform.GetChild(1).childCount; i++)

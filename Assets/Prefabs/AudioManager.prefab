@@ -248,4 +248,11 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
+  - name: UI_LevelUp
+    clip: {fileID: 8300000, guid: 4422753c3d49f8a41ab870db6d25035d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: 451d06667d859114387020cf37746b23, type: 2}

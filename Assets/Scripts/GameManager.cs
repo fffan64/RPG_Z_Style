@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -68,8 +69,8 @@ public class GameManager : MonoBehaviour {
     {
         transitionAnim.SetTrigger("fadeIn");
         FindObjectOfType<AudioManager>().Stop("MainMenuTheme");
-        yield return new WaitForSeconds(transitionTime);
         mainMenuUI.SetActive(false);
+        yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         FindObjectOfType<AudioManager>().Play("Theme_1");
         hudPlayer.SendMessage("ShowHUD");
