@@ -31,7 +31,9 @@ public class Player : MonoBehaviour {
     private bool xpChanged;
     private bool hpChanged;
     private bool coinChanged;
-    
+
+    private bool blockAll;
+
     private void Awake()
     {
         Assert.IsNotNull(initialMap);
@@ -62,7 +64,7 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (!FindObjectOfType<GameManager>().gameIsPaused)
+        if (!blockAll && !FindObjectOfType<GameManager>().gameIsPaused)
         {
             Movements();
 
@@ -253,5 +255,14 @@ public class Player : MonoBehaviour {
     {
         coin+=amount;
         coinChanged = true;
+    }
+
+    public void BlockAllUpdate()
+    {
+        blockAll = true;
+    }
+    public void ReleaseAllUpdate()
+    {
+        blockAll = false;
     }
 }

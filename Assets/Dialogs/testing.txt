@@ -1,0 +1,5 @@
+Jon: Hello there !
+NPC1: Yapo...
+Jon: What's up here ?
+NPC1: Nothing new.
+Jon: Ok, See you :)
