@@ -255,4 +255,11 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
+  - name: Bomb
+    clip: {fileID: 8300000, guid: f4ea0aa605cec3e42b606079dde9360f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: 451d06667d859114387020cf37746b23, type: 2}

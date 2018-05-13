@@ -34,6 +34,11 @@ public class Player : MonoBehaviour {
 
     private bool blockAll;
 
+    public GameObject bomb;
+    public float distanceFromPlayerSpawn = 1f;
+
+    private Vector2 prevMov;
+
     private void Awake()
     {
         Assert.IsNotNull(initialMap);
@@ -74,6 +79,8 @@ public class Player : MonoBehaviour {
 
             SlashAttack();
 
+            BombAttack();
+
             PreventMovement();
 
             UpdateHUD();
@@ -100,6 +107,7 @@ public class Player : MonoBehaviour {
             anim.SetFloat("movX", mov.x);
             anim.SetFloat("movY", mov.y);
             anim.SetBool("walking", true);
+            prevMov = mov;
         }
         else
         {
@@ -114,6 +122,14 @@ public class Player : MonoBehaviour {
     public void PlayFootStepRight()
     {
         FindObjectOfType<AudioManager>().Play("Footstep2");
+    }
+
+    void BombAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Instantiate(bomb, transform.position + (new Vector3(prevMov.x, prevMov.y, 0)).normalized * distanceFromPlayerSpawn, Quaternion.identity);
+        }
     }
 
     void SwordAttack()
@@ -255,6 +271,21 @@ public class Player : MonoBehaviour {
     {
         coin+=amount;
         coinChanged = true;
+    }
+
+    public void AddToInventory(List<object> list)
+    {
+        PickUp.TypePickup type = (PickUp.TypePickup)list[0];
+        int amount = (int)list[1];
+        Debug.Log("Adding " + amount + " x " + type.ToString() + " to inventory !");
+        switch (type)
+        {
+            case PickUp.TypePickup.HP_REPLENISH:
+                break;
+            
+            default:
+                break;
+        }
     }
 
     public void BlockAllUpdate()

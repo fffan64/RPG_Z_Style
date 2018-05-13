@@ -41,6 +41,11 @@ public class Destroyable : MonoBehaviour {
         }
     }
 
+    public void Attacked(int damage)
+    {
+        StartCoroutine(DoDestroy());
+    }
+
     void Update()
     {
 

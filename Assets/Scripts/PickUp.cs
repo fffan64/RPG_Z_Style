@@ -7,7 +7,8 @@ public class PickUp : MonoBehaviour {
     public enum TypePickup
     {
         HP_REPLENISH,
-        COIN
+        COIN,
+        BOMB
     }
 
     public TypePickup type;
@@ -26,6 +27,15 @@ public class PickUp : MonoBehaviour {
                 case TypePickup.COIN:
                     col.SendMessage("SetAddCoin", amount);
                     FindObjectOfType<AudioManager>().Play("Coin");
+                    break;
+                case TypePickup.BOMB:
+                    List<object> temp = new List<object>
+                    {
+                        TypePickup.BOMB,
+                        amount
+                    };
+                    col.SendMessage("AddToInventory", temp);
+                    FindObjectOfType<AudioManager>().Play("PickUp");
                     break;
                 default:
                     break;
