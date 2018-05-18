@@ -32,7 +32,7 @@ TextureImporter:
     21300054: Items_RPG_34x34icons_27
     21300056: Items_RPG_34x34icons_28
     21300058: Items_RPG_34x34icons_29
-    21300060: Power Potion
+    21300060: power_potion
     21300062: Items_RPG_34x34icons_31
     21300064: Items_RPG_34x34icons_32
     21300066: Items_RPG_34x34icons_33
@@ -184,7 +184,7 @@ TextureImporter:
     21300358: Items_RPG_34x34icons_179
     21300360: Items_RPG_34x34icons_180
     21300362: Items_RPG_34x34icons_181
-    21300364: White Shirt
+    21300364: white_shirt
     21300366: Items_RPG_34x34icons_183
     21300368: Items_RPG_34x34icons_184
     21300370: Items_RPG_34x34icons_185
@@ -276,7 +276,7 @@ TextureImporter:
     21300542: Items_RPG_34x34icons_271
     21300544: Items_RPG_34x34icons_272
     21300546: Items_RPG_34x34icons_273
-    21300548: Amulet of Prayers
+    21300548: amulet_of_prayers
     21300550: Items_RPG_34x34icons_275
     21300552: Items_RPG_34x34icons_276
     21300554: Items_RPG_34x34icons_277
@@ -1135,7 +1135,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Power Potion
+      name: power_potion
       rect:
         serializedVersion: 2
         x: 68
@@ -4175,7 +4175,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: White Shirt
+      name: white_shirt
       rect:
         serializedVersion: 2
         x: 0
@@ -6015,7 +6015,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Amulet of Prayers
+      name: amulet_of_prayers
       rect:
         serializedVersion: 2
         x: 272

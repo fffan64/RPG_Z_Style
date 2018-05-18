@@ -1,0 +1,44 @@
+[
+	{
+		"id": 0,
+		"title": "Amulet of Prayers",
+		"description": "An amulet enchanted by prayers",
+		"value": 6,
+		"stats": {
+			"power": 1,
+			"defence": 4,
+			"vitality": 2
+		},
+		"stackable": false,
+		"rarity": 2,
+		"slug": "amulet_of_prayers"
+	},
+	{
+		"id": 1,
+		"title": "White Shirt",
+		"description": "A shirt that is white",
+		"value": 2,
+		"stats": {
+			"power": 1,
+			"defence": 2,
+			"vitality": 1
+		},
+		"stackable": true,
+		"rarity": 1,
+		"slug": "white_shirt"
+	},
+	{
+		"id": 2,
+		"title": "Power Potion",
+		"description": "A potion that temporary increase your power",
+		"value": 3,
+		"stats": {
+			"power": 10,
+			"defence": 0,
+			"vitality": 0
+		},
+		"stackable": true,
+		"rarity": 2,
+		"slug": "power_potion"
+	}
+]

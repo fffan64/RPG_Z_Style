@@ -1,14 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LitJson;
+using System.IO;
+using System.Linq;
 
 public class ItemDatabase : MonoBehaviour {
-    public List<Item> items = new List<Item>();
+    private List<Item> database = new List<Item>();
+    private JsonData itemdData;
 
-    private void Start()
+    void Start()
     {
-        items.Add(new Item("Amulet of Prayers", 0, "An amulet enchanted by prayers", 2, 0, Item.ItemType.Weapon));
-        items.Add(new Item("White Shirt", 1, "A shirt that is white", 0, 0, Item.ItemType.Weapon));
-        items.Add(new Item("Power Potion", 2, "A potion that temporary increase your power", 0, 0, Item.ItemType.Consumable));
+        string sJSON = File.ReadAllText(Application.dataPath + "/StreamingAssets/items.json");
+        itemdData = JsonMapper.ToObject(sJSON);
+        ConstructItemDatabase();
+        Debug.Log(FetchItemByID(1).Description);
     }
+
+    public Item FetchItemByID(int id)
+    {
+        return database.FirstOrDefault(x => x.ID == id);
+    }
+
+    void ConstructItemDatabase()
+    {
+        for(int i = 0; i < itemdData.Count; i++)
+        {
+            database.Add(new Item((int)itemdData[i]["id"], itemdData[i]["title"].ToString(), itemdData[i]["description"].ToString(), (int)itemdData[i]["value"],
+                (int)itemdData[i]["stats"]["power"], (int)itemdData[i]["stats"]["defence"], (int)itemdData[i]["stats"]["vitality"], (bool)itemdData[i]["stackable"], (int)itemdData[i]["rarity"], itemdData[i]["slug"].ToString()
+                ));
+        }
+    }
+
+    public List<Item> items = new List<Item>();
 }

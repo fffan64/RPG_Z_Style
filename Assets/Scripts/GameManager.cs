@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        MainMenu(true);
+        //MainMenu(true);
     }
 
     private void Update()
