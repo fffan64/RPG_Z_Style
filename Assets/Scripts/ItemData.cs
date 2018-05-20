@@ -15,7 +15,7 @@ public class ItemData : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDr
 
     private void Start()
     {
-        inv = GameObject.Find("Inventory").GetComponent<Inventory>();
+        inv = Inventory.Instance;//GameObject.Find("Inventory").GetComponent<Inventory>();
         tooltip = inv.GetComponent<Tooltip>();
     }
 
@@ -23,10 +23,29 @@ public class ItemData : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDr
     {
         if (item != null)
         {
-            offset = eventData.position - new Vector2(transform.position.x, transform.position.y);
-            transform.SetParent(transform.parent.parent);
-            transform.position = eventData.position - offset;
-            GetComponent<CanvasGroup>().blocksRaycasts = false;
+            if(eventData.button == PointerEventData.InputButton.Left)
+            {
+                offset = eventData.position - new Vector2(transform.position.x, transform.position.y);
+                transform.SetParent(transform.parent.parent);
+                transform.position = eventData.position - offset;
+                GetComponent<CanvasGroup>().blocksRaycasts = false;
+            } else if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                if(item.TypeItem == Item.Type.consumable)
+                {
+                    if (amount > 1)
+                    {
+                        inv.UseConsumable(item, slot, false);
+                    }
+                    else
+                    {
+                        inv.UseConsumable(item, slot, true);
+                    }
+                } else
+                {
+                    Debug.Log("Item clicked is of type: " + item.TypeItem.ToString());
+                }
+            }            
         }
     }
 
@@ -53,5 +72,11 @@ public class ItemData : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDr
     public void OnPointerExit(PointerEventData eventData)
     {
         tooltip.Deactivate();
+    }
+
+    private void OnDestroy()
+    {
+        if(tooltip)
+            tooltip.Deactivate();
     }
 }

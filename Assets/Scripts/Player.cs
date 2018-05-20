@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -47,6 +48,10 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        CombatEvents.OnEnemyDeath += EnemyToExperience;
+        Quest.OnGiveQuestExperience += GetQuestExperience;
+
         anim = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
 
@@ -64,6 +69,12 @@ public class Player : MonoBehaviour {
         hudPlayer.GetComponent<HUD>().SetXp(xp, levelUpXpNeeded[level]);
         hudPlayer.GetComponent<HUD>().SetHp(hp, maxHp);
         hudPlayer.GetComponent<HUD>().SetCoin(coin);
+    }
+
+    private void GetQuestExperience(Quest quest)
+    {
+        xp += quest.ExperienceRewarded;
+        xpChanged = true;
     }
 
     // Update is called once per frame
@@ -207,10 +218,10 @@ public class Player : MonoBehaviour {
         yield return new WaitForSeconds(seconds);
         movePrevent = false;
     }
-
-    public void AddXp(int xpToAdd)
-    {
-        xp += xpToAdd;
+    
+    public void EnemyToExperience(IEnemy enemy)
+    {   
+        xp += enemy.Experience;
         xpChanged = true;
     }
 

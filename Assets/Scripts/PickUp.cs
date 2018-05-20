@@ -8,11 +8,20 @@ public class PickUp : MonoBehaviour {
     {
         HP_REPLENISH,
         COIN,
-        BOMB
+        BOMB,
+        OTHER
     }
 
     public TypePickup type;
     public int amount = 1;
+    public Item item;
+
+    public void SetItem(Item i)
+    {
+        item = i;
+        GetComponent<SpriteRenderer>().sprite = item.Sprite;
+        Debug.Log("change sprite " + item.Sprite.name);
+    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -36,6 +45,9 @@ public class PickUp : MonoBehaviour {
                     };
                     col.SendMessage("AddToInventory", temp);
                     FindObjectOfType<AudioManager>().Play("PickUp");
+                    break;
+                case TypePickup.OTHER:
+                    Inventory.Instance.AddItem(item.ID);
                     break;
                 default:
                     break;

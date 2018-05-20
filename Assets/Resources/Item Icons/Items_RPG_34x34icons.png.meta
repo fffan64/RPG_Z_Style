@@ -72,7 +72,7 @@ TextureImporter:
     21300134: Items_RPG_34x34icons_67
     21300136: Items_RPG_34x34icons_68
     21300138: Items_RPG_34x34icons_69
-    21300140: Items_RPG_34x34icons_70
+    21300140: sword_ordinary
     21300142: Items_RPG_34x34icons_71
     21300144: Items_RPG_34x34icons_72
     21300146: Items_RPG_34x34icons_73
@@ -1935,7 +1935,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Items_RPG_34x34icons_70
+      name: sword_ordinary
       rect:
         serializedVersion: 2
         x: 0

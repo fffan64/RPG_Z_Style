@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class Enemy_Log : MonoBehaviour {
+public class Enemy_Log : MonoBehaviour, IEnemy {
 
     public float visionRadius = 2.5f;
     public float attackRadius = 1f;
@@ -35,8 +36,22 @@ public class Enemy_Log : MonoBehaviour {
     public float timeForDisable = 0.25f;
     bool defeated;
 
+    public int ID { get; set; }
+    public int Experience { get; set; }
+
+    public DropTable DropTable { get; set; }
+
     private void Start()
     {
+        DropTable = new DropTable();
+        DropTable.loot = new List<LootDrop>
+        {
+            new LootDrop("sword_ordinary", 25),
+            new LootDrop("power_potion", 25),
+            new LootDrop("white_shirt", 25)
+        };
+        ID = 0;
+        Experience = xp;
         player = GameObject.FindGameObjectWithTag("Player");
 
         initialPosition = transform.position;
@@ -94,7 +109,7 @@ public class Enemy_Log : MonoBehaviour {
 
                 if (!attacking)
                 {
-                    StartCoroutine(Attack(attackSpeed));
+                    PerformAttack();
                 }
             }
             else
@@ -139,15 +154,15 @@ public class Enemy_Log : MonoBehaviour {
         attacking = false;
     }
 
+    /*
     public void Attacked()
     {
         FindObjectOfType<AudioManager>().Play("Enemy_Log_Hurt");
         if (--hp <= 0)
         {
-            player.SendMessage("AddXp", xp);
             StartCoroutine(DoDestroy());
         }
-    }
+    }*/
 
     private IEnumerator DoDestroy()
     {
@@ -165,7 +180,20 @@ public class Enemy_Log : MonoBehaviour {
 
         yield return new WaitForSeconds(timeForDisable);
 
-        
+        DropLoot();
+        CombatEvents.EnemyDied(this);
+    }
+
+    private void DropLoot()
+    {
+        Item item = DropTable.GetDrop();
+        Debug.Log("Dropped " + item);
+        if (item != null)
+        {
+            Debug.Log("Dropped " + item.Title);
+            GameObject instance = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Pickup_Item.prefab", typeof(GameObject)), transform.position, Quaternion.identity);
+            instance.GetComponent<PickUp>().SetItem(item);
+        }
     }
 
     private void OnBecameInvisible()
@@ -177,5 +205,25 @@ public class Enemy_Log : MonoBehaviour {
     {
         //Debug.Log("Became visible");
         enabled = true;
+    }
+
+    public void Die()
+    {
+        StartCoroutine(DoDestroy());
+    }
+
+    public void TakeDamage(int amount)
+    {
+        FindObjectOfType<AudioManager>().Play("Enemy_Log_Hurt");
+        hp -= amount;
+        if (hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void PerformAttack()
+    {
+        StartCoroutine(Attack(attackSpeed));
     }
 }

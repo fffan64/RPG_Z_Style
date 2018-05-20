@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour {
 
+    public int damage = 1;
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Enemy")
         {
-            col.SendMessage("Attacked");
+            col.SendMessage("TakeDamage", damage);
         }
     }
 }
