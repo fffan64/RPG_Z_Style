@@ -11,6 +11,7 @@ public class Slash : MonoBehaviour {
     public Vector2 mov;
 
     public float speed;
+	public int damage = 1;
 
     private void Awake()
     {
@@ -49,7 +50,7 @@ public class Slash : MonoBehaviour {
         {
             if (col.tag == "Enemy")
             {
-                col.SendMessage("Attacked");
+                col.SendMessage("TakeDamage", damage);
             }
             FindObjectOfType<AudioManager>().Stop("Sword_Magic");
             Destroy(gameObject);
