@@ -311,6 +311,8 @@ GameObject:
   - component: {fileID: 192465748}
   - component: {fileID: 192465750}
   - component: {fileID: 192465744}
+  - component: {fileID: 192465751}
+  - component: {fileID: 192465752}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -333,6 +335,8 @@ MonoBehaviour:
   initialMap: {fileID: 1170436266}
   slashPrefab: {fileID: 1107765475528752, guid: e2c6f6d341a77ac439ce32c0804a2166,
     type: 2}
+  mov: {x: 0, y: 0}
+  movePrevent: 0
   maxHp: 12
   hp: 0
   xp: 0
@@ -341,6 +345,7 @@ MonoBehaviour:
   levelUpXpNeeded: 0000000028000000a000000080020000460500001e0a00009f0f000088130000581b000028230000
   bomb: {fileID: 1949375739554966, guid: 185948f575b18e046986f6305f7f3919, type: 2}
   distanceFromPlayerSpawn: 1
+  prevMov: {x: 0, y: 0}
 --- !u!114 &192465744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,6 +422,7 @@ Transform:
   - {fileID: 1762622188}
   - {fileID: 1958458612}
   - {fileID: 482849936}
+  - {fileID: 2138478009}
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -495,6 +501,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fixEveryFrame: 1
+--- !u!114 &192465751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 192465742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d6f07757b9f8564c90b6ca852b6f8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &192465752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 192465742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b671feeea8c7948b79c098736aefcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHand: {fileID: 2138478008}
 --- !u!1 &214122590
 GameObject:
   m_ObjectHideFlags: 0
@@ -2243,6 +2272,7 @@ MonoBehaviour:
   inventoryItem: {fileID: 1816066982994414, guid: e3c0f492bbce90244b464f31a784e146,
     type: 2}
   slots: []
+  playerWeaponController: {fileID: 192465752}
 --- !u!4 &824009452
 Transform:
   m_ObjectHideFlags: 0
@@ -5208,3 +5238,31 @@ GameObject:
   m_PrefabParentObject: {fileID: 1476705352180592, guid: 3a85d5b25a5c46b4cb687c8b23e7c4e6,
     type: 2}
   m_PrefabInternal: {fileID: 1863578395}
+--- !u!1 &2138478008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2138478009}
+  m_Layer: 0
+  m_Name: Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2138478009
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2138478008}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 192465746}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -10,6 +10,8 @@ public class ItemDatabase : MonoBehaviour {
     public static ItemDatabase Instance { get; set; }
     private List<Item> database = new List<Item>();
 
+    public Sprite[] allSpritesIcons { get; set; }
+
     internal Item FetchItemBySlug(string itemSlug)
     {
         return database.FirstOrDefault(x => x.Slug == itemSlug);
@@ -23,6 +25,10 @@ public class ItemDatabase : MonoBehaviour {
             Destroy(gameObject);
         else
             Instance = this;
+
+        allSpritesIcons = Resources.LoadAll<Sprite>("Item Icons/");
+
+
         string sJSON = File.ReadAllText(Application.dataPath + "/StreamingAssets/items.json");
         itemdData = JsonMapper.ToObject(sJSON);
         ConstructItemDatabase();
@@ -38,7 +44,7 @@ public class ItemDatabase : MonoBehaviour {
         for(int i = 0; i < itemdData.Count; i++)
         {
             database.Add(new Item((int)itemdData[i]["id"], (Item.Type)System.Enum.Parse(typeof(Item.Type), itemdData[i]["type"].ToString(), true), itemdData[i]["title"].ToString(), itemdData[i]["description"].ToString(), (int)itemdData[i]["value"],
-                (int)itemdData[i]["stats"]["power"], (int)itemdData[i]["stats"]["defence"], (int)itemdData[i]["stats"]["vitality"], (bool)itemdData[i]["stackable"], (int)itemdData[i]["rarity"], itemdData[i]["slug"].ToString()
+                (int)itemdData[i]["stats"]["power"], (int)itemdData[i]["stats"]["defence"], (int)itemdData[i]["stats"]["vitality"], (bool)itemdData[i]["stackable"], (int)itemdData[i]["rarity"], itemdData[i]["slug"].ToString(), new List<BaseStat>()
                 ));
         }
     }

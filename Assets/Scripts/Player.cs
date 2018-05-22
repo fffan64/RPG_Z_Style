@@ -12,8 +12,10 @@ public class Player : MonoBehaviour {
     public GameObject slashPrefab;
     Animator anim;
     Rigidbody2D rb2d;
-    Vector2 mov;
-    bool movePrevent;
+    [HideInInspector]
+    public Vector2 mov;
+    [HideInInspector]
+    public bool movePrevent;
 
     CircleCollider2D attackCollider;
 
@@ -37,8 +39,9 @@ public class Player : MonoBehaviour {
 
     public GameObject bomb;
     public float distanceFromPlayerSpawn = 1f;
-
-    private Vector2 prevMov;
+    
+    [HideInInspector]
+    public Vector2 prevMov;
 
     private void Awake()
     {
@@ -86,9 +89,9 @@ public class Player : MonoBehaviour {
 
             Animations();
 
-            SwordAttack();
+            //SwordAttack();
 
-            SlashAttack();
+            //SlashAttack();
 
             BombAttack();
 
@@ -143,18 +146,20 @@ public class Player : MonoBehaviour {
         }
     }
 
+    /*
     void SwordAttack()
     {
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         bool attacking = stateInfo.IsName("Player_attack");
-
+        
+        
         if (Input.GetKeyDown("space") && !attacking)
         {
             anim.SetTrigger("attacking");
             FindObjectOfType<AudioManager>().PlayRandom("Sword_attack_1", "Sword_attack_2", "Sword_attack_3");
             //FindObjectOfType<AudioManager>().Play("Sword_attack_1");
         }
-
+        
         if (mov != Vector2.zero)
         {
             attackCollider.offset = new Vector2(mov.x / 2, mov.y / 2);
@@ -173,8 +178,9 @@ public class Player : MonoBehaviour {
                 attackCollider.enabled = false;
             }
         }
-    }
+    }*/
 
+    /*
     void SlashAttack()
     {
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
@@ -204,6 +210,7 @@ public class Player : MonoBehaviour {
             movePrevent = true;
         }
     }
+    */
 
     void PreventMovement()
     {
@@ -213,7 +220,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    IEnumerator EnableMovementAfter(float seconds)
+    public IEnumerator EnableMovementAfter(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         movePrevent = false;

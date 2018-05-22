@@ -20,6 +20,9 @@ public class Inventory : MonoBehaviour {
 
     private bool show;
 
+    public Item sword;
+    public PlayerWeaponController playerWeaponController;
+
     private void Start()
     {
         if (Instance != null && Instance != this)
@@ -54,6 +57,15 @@ public class Inventory : MonoBehaviour {
         AddItem(2);
         AddItem(2);
         AddItem(2);
+
+
+        playerWeaponController.GetComponent<PlayerWeaponController>();
+        List<BaseStat> swordStats = new List<BaseStat>();
+        swordStats.Add(new BaseStat(6, "Power", "Your power level."));
+        sword = new Item(10,Item.Type.weapon,"Sword","A sword", 10, 10, 10, 10, true, 0, "sword_ordinary", swordStats);
+
+
+
         ShowInventory(show);
     }
 
@@ -64,11 +76,22 @@ public class Inventory : MonoBehaviour {
             show = !show;
             ShowInventory(show);
         }
+
+        //TESTING
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            playerWeaponController.EquipWeapon(sword);
+        }
     }
 
     private void ShowInventory(bool show)
     {
         inventoryPanel.SetActive(show);
+    }
+
+    public void AddItem(Item item)
+    {
+
     }
 
     public void AddItem(int id)

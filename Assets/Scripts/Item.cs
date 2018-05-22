@@ -28,14 +28,11 @@ public class Item {
     public string Special { get; set; }
     public string Effect { get; set; }
 
-    private Sprite[] allSpritesIcons;
+    public List<BaseStat> Stats { get; set; }
 
-    public Item(int id, Type type, string title, string description, int value, int power, int defence, int vitality, bool stackable, int rarity, string slug)
+    public Item(int id, Type type, string title, string description, int value, int power, int defence, int vitality, bool stackable, int rarity, string slug, List<BaseStat> _Stats)
     {
-        if(allSpritesIcons == null)
-        {
-            allSpritesIcons = Resources.LoadAll<Sprite>("Item Icons/");
-        }
+        
         ID = id;
         TypeItem = type;
         Title = title;
@@ -47,9 +44,11 @@ public class Item {
         Stackable = stackable;
         Rarity = rarity;
         Slug = slug;
-        Sprite = allSpritesIcons.Where(x => x.name == slug).SingleOrDefault();
+        Sprite = ItemDatabase.Instance.allSpritesIcons.Where(x => x.name == slug).SingleOrDefault();
         Special = "Nothing special...";
         Effect = "No effect...";
+
+        Stats = _Stats;
     }
 
     public Item()

@@ -191,7 +191,7 @@ public class Enemy_Log : MonoBehaviour, IEnemy {
         if (item != null)
         {
             Debug.Log("Dropped " + item.Title);
-            GameObject instance = (GameObject)Instantiate(AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Pickup_Item.prefab", typeof(GameObject)), transform.position, Quaternion.identity);
+            GameObject instance = (GameObject)Instantiate(Resources.Load<GameObject>("Pickup_Item"), transform.position, Quaternion.identity);
             instance.GetComponent<PickUp>().SetItem(item);
         }
     }
