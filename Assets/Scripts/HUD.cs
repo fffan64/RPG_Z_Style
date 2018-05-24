@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class HUD : MonoBehaviour {
 
@@ -16,9 +17,10 @@ public class HUD : MonoBehaviour {
     public Sprite[] allNumbers;
     public Sprite[] allHearts;
 
-
     private void Awake()
     {
+        UIEventHandler.OnItemEquipped += SetItemEquipped;
+
         HUDPLayer = GameObject.FindGameObjectWithTag("HUD_Player");
         HUD_XP_BAR = HUDPLayer.transform.GetChild(0).GetChild(1).GetComponent<Image>();
         //Get all hearts images
@@ -123,5 +125,10 @@ public class HUD : MonoBehaviour {
         {
             hearts[i].sprite = allHearts[nbQuartHeartLeft];
         }
+    }
+
+    private void SetItemEquipped(Item itemToEquip)
+    {
+        HUDPLayer.transform.Find("HUD_Top/WEAPON").GetComponent<Image>().sprite = ItemDatabase.Instance.allSpritesIcons.Where(x => x.name == itemToEquip.Slug).SingleOrDefault();
     }
 }

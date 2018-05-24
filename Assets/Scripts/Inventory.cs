@@ -62,8 +62,8 @@ public class Inventory : MonoBehaviour {
         playerWeaponController.GetComponent<PlayerWeaponController>();
         List<BaseStat> swordStats = new List<BaseStat>();
         swordStats.Add(new BaseStat(6, "Power", "Your power level."));
-        sword = new Item(10,Item.Type.weapon,"Sword","A sword", 10, 10, 10, 10, true, 0, "sword_ordinary", swordStats);
-
+        //sword = new Item(10,Item.Type.weapon,"Sword","A sword", 10, 10, 10, 10, true, 0, "sword_ordinary", swordStats);
+        sword = new Item(10, Item.Type.weapon, "Sword", "A sword", 10, 10, 10, 10, true, 0, "staff_fire", swordStats);
 
 
         ShowInventory(show);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : MonoBehaviour, IWeapon
+public class Staff : MonoBehaviour, IWeapon, IProjectileWeapon
 {
     private GameObject playerGameObject;
     private Player playerScript;
@@ -12,6 +12,9 @@ public class Sword : MonoBehaviour, IWeapon
 
     public List<BaseStat> Stats { get; set; }
     public int CurrentDamage { get; set; }
+    public Transform ProjectileSpawn { get; set; }
+
+    Fireball fireball;
 
     public GameObject slashPrefab;
 
@@ -20,6 +23,7 @@ public class Sword : MonoBehaviour, IWeapon
 
     private void Start()
     {
+        fireball = Resources.Load<Fireball>("Weapons/Projectiles/Fireball");
         playerGameObject = GameObject.FindGameObjectWithTag("Player");
         playerScript = FindObjectOfType<Player>();
         animator = playerGameObject.GetComponent<Animator>();
@@ -106,21 +110,24 @@ public class Sword : MonoBehaviour, IWeapon
     public void PerformAttack(int damage)
     {
         CurrentDamage = damage;
-        Debug.Log("Sword Attack !");
+        Debug.Log("Staff Attack !");
         triggeredNormalAttack = true;
+        CastProjectile();
     }
 
     public void PerformSpecialAttack()
     {
-        Debug.Log("Sword Special Attack !");
+        Debug.Log("Staff Special Attack !");
         //triggeredSpecialAttack = true;
     }
-    
-    private void OnTriggerEnter2D(Collider2D col)
+
+    public void CastProjectile()
     {
-        if (col.tag == "Enemy")
-        {
-            col.GetComponent<IEnemy>().TakeDamage(CurrentDamage);
-        }
+        Fireball fireballInstance = Instantiate(fireball, ProjectileSpawn.position, ProjectileSpawn.rotation);
+        fireballInstance.Damage = CurrentDamage;
+        if(playerScript.mov == Vector2.zero)
+            fireballInstance.Direction = playerScript.prevMov;
+        else
+            fireballInstance.Direction = playerScript.mov;
     }
 }

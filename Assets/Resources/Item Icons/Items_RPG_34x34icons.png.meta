@@ -135,8 +135,8 @@ TextureImporter:
     21300260: Items_RPG_34x34icons_130
     21300262: Items_RPG_34x34icons_131
     21300264: Items_RPG_34x34icons_132
-    21300266: Items_RPG_34x34icons_133
-    21300268: Items_RPG_34x34icons_134
+    21300266: staff_fire
+    21300268: staff_ice
     21300270: Items_RPG_34x34icons_135
     21300272: Items_RPG_34x34icons_136
     21300274: Items_RPG_34x34icons_137
@@ -3195,7 +3195,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Items_RPG_34x34icons_133
+      name: staff_fire
       rect:
         serializedVersion: 2
         x: 238
@@ -3215,7 +3215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Items_RPG_34x34icons_134
+      name: staff_ice
       rect:
         serializedVersion: 2
         x: 272

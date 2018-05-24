@@ -9,28 +9,42 @@ public class PlayerWeaponController : MonoBehaviour {
     public GameObject playerHand;
     public GameObject EquippedWeapon { get; set; }
 
+    Transform spawnProjectile;
+    Item currentlyEquippedItem;
     IWeapon equippedWeapon;
     CharacterStats characterStats;
 
     private void Start()
     {
-        characterStats = GetComponent<CharacterStats>();
+        spawnProjectile = transform.Find("ProjectileSpawn");
+        characterStats = GetComponent<Player>().characterStats;
     }
 
     public void EquipWeapon(Item itemToEquip)
     {
         if(EquippedWeapon != null)
         {
-            characterStats.RemoveStatBonus(EquippedWeapon.GetComponent<IWeapon>().Stats);
-            Destroy(playerHand.transform.GetChild(0).gameObject);
+            UnequipWeapon();
         }
         EquippedWeapon = (GameObject)Instantiate(Resources.Load<GameObject>("Weapons/" + itemToEquip.Slug), playerHand.transform.position, playerHand.transform.rotation);
         equippedWeapon = EquippedWeapon.GetComponent<IWeapon>();
+        if(EquippedWeapon.GetComponent<IProjectileWeapon>() != null)
+            EquippedWeapon.GetComponent<IProjectileWeapon>().ProjectileSpawn = spawnProjectile;
         equippedWeapon.Stats = itemToEquip.Stats;
+        currentlyEquippedItem = itemToEquip;
         EquippedWeapon.transform.SetParent(playerHand.transform);
         characterStats.AddStatBonus(itemToEquip.Stats);
-        //Debug.Log(equippedWeapon.Stats[0].GetCalculatedStatValue());
-        GameObject.FindGameObjectWithTag("HUD_Player").transform.Find("HUD_Top/WEAPON").GetComponent<Image>().sprite = ItemDatabase.Instance.allSpritesIcons.Where(x => x.name == itemToEquip.Slug).SingleOrDefault();
+        UIEventHandler.ItemEquipped(itemToEquip);
+        UIEventHandler.StatsChanged();
+
+    }
+
+    void UnequipWeapon()
+    {
+        Inventory.Instance.AddItem(currentlyEquippedItem);
+        characterStats.RemoveStatBonus(equippedWeapon.Stats);
+        Destroy(EquippedWeapon.transform.gameObject);
+        UIEventHandler.StatsChanged();
     }
 
     private void Update()
@@ -44,11 +58,30 @@ public class PlayerWeaponController : MonoBehaviour {
         }
     }
 
+    private int CalculateDamage()
+    {
+        int damageToDeal = (characterStats.GetStat(BaseStat.BaseStatType.Power).GetCalculatedStatValue() * 2)
+            + Random.Range(2, 8);
+        damageToDeal += CalculateCrit(damageToDeal);
+        Debug.Log("Damage dealt: " + damageToDeal);
+        return damageToDeal;
+    }
+
+    private int CalculateCrit(int damage)
+    {
+        if (Random.value <= .10f)
+        {
+            int critDamage = (int)(damage * Random.Range(.5f, .75f));
+            return critDamage;
+        }
+        return 0;
+    }
+
     public void PerformWeaponAttack()
     {
         if (EquippedWeapon != null)
         {
-            equippedWeapon.PerformAttack();
+            equippedWeapon.PerformAttack(CalculateDamage());
         }
     }
     public void PerformWeaponAttackSpecial()
