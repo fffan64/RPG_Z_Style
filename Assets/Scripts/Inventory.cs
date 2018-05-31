@@ -10,7 +10,6 @@ public class Inventory : MonoBehaviour {
 
     GameObject inventoryPanel;
     GameObject slotPanel;
-    ItemDatabase database;
     public GameObject inventorySlot;
     public GameObject inventoryItem;
 
@@ -21,7 +20,9 @@ public class Inventory : MonoBehaviour {
     private bool show;
 
     public Item sword;
+    public Item PotionLog;
     public PlayerWeaponController playerWeaponController;
+    public ConsumableController consumableController;
 
     private void Start()
     {
@@ -33,7 +34,6 @@ public class Inventory : MonoBehaviour {
             Instance = this;
         }
 
-        database = ItemDatabase.Instance;
         slotAmount = 20;
         inventoryPanel = GameObject.Find("Inventory Panel");
         slotPanel = inventoryPanel.transform.Find("Slot Panel").gameObject;
@@ -59,12 +59,20 @@ public class Inventory : MonoBehaviour {
         AddItem(2);
 
 
-        playerWeaponController.GetComponent<PlayerWeaponController>();
+        //playerWeaponController = GetComponent<PlayerWeaponController>();
+        //consumableController = GetComponent<ConsumableController>();
+
+        /*
         List<BaseStat> swordStats = new List<BaseStat>();
         swordStats.Add(new BaseStat(6, "Power", "Your power level."));
         //sword = new Item(10,Item.Type.weapon,"Sword","A sword", 10, 10, 10, 10, true, 0, "sword_ordinary", swordStats);
         sword = new Item(10, Item.Type.weapon, "Sword", "A sword", 10, 10, 10, 10, true, 0, "staff_fire", swordStats);
 
+        PotionLog = new Item(11, Item.Type.consumable, "Potion Log", "Drink this to log something cool!", 0, 0, 0, 0, true, 0, "potion_log", new List<BaseStat>(), "Drink", false);
+        */
+        AddItem("sword_ordinary");
+        AddItem("staff_fire");
+        AddItem("potion_log");
 
         ShowInventory(show);
     }
@@ -76,12 +84,6 @@ public class Inventory : MonoBehaviour {
             show = !show;
             ShowInventory(show);
         }
-
-        //TESTING
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            playerWeaponController.EquipWeapon(sword);
-        }
     }
 
     private void ShowInventory(bool show)
@@ -89,20 +91,25 @@ public class Inventory : MonoBehaviour {
         inventoryPanel.SetActive(show);
     }
 
-    public void AddItem(Item item)
+    public void AddItem(string slug)
     {
-
+        Item itemToAdd = ItemDatabase.Instance.FetchItemBySlug(slug);
+        DoAddItem(itemToAdd);
     }
 
     public void AddItem(int id)
     {
-        Item itemToAdd = database.FetchItemByID(id);
+        Item itemToAdd = ItemDatabase.Instance.FetchItemByID(id);
+        DoAddItem(itemToAdd);
+    }
 
-        if(itemToAdd.Stackable && CheckIfItemIsInInventory(itemToAdd))
+    public void DoAddItem(Item itemToAdd)
+    {
+        if (itemToAdd.Stackable && CheckIfItemIsInInventory(itemToAdd))
         {
-            for(int i = 0; i < items.Count; i++)
+            for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].ID == id)
+                if (items[i].ID == itemToAdd.ID)
                 {
                     ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
                     data.amount++;
@@ -110,7 +117,8 @@ public class Inventory : MonoBehaviour {
                     break;
                 }
             }
-        } else
+        }
+        else
         {
             for (int i = 0; i < items.Count; i++)
             {
@@ -124,6 +132,7 @@ public class Inventory : MonoBehaviour {
                     iData.amount = 1;
                     itemObj.transform.SetParent(slots[i].transform);
                     itemObj.transform.localScale = Vector3.one;
+                    itemObj.transform.localPosition = Vector3.zero;
                     itemObj.GetComponent<Image>().sprite = itemToAdd.Sprite;
                     itemObj.name = itemToAdd.Title;
                     break;
@@ -132,10 +141,50 @@ public class Inventory : MonoBehaviour {
         }
         UIEventHandler.ItemAddedToInventory(itemToAdd);
     }
+    
+    public void SetItemDetails(Item item, Button selectedButton)
+    {
+        //inventoryDetailsPanel.SetItem(item, selectedButton);
+    }
+
+    public void EquipItem(Item itemToEquip)
+    {
+        playerWeaponController.EquipWeapon(itemToEquip);
+    }
+
+    public void ConsumeItem(Item itemToConsume)
+    {
+        consumableController.ConsumeItem(itemToConsume);
+    }
+
+    public void Equip(Item item, int slot, bool deleteItem)
+    {
+        if (item.ItemType == Item.ItemTypes.armor || item.ItemType == Item.ItemTypes.weapon)
+        {
+            Debug.Log("EQUIP ITEM : " + item.Title);
+            ItemData data = slots[slot].transform.GetChild(0).GetComponent<ItemData>();
+            data.amount--;
+            data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
+
+            Debug.Log("Equipped => do stuff");
+            Inventory.Instance.EquipItem(item);
+
+            if (deleteItem)
+            {
+                items[slot] = new Item();
+                Destroy(slots[slot].transform.GetChild(0).gameObject);
+                Debug.Log("Remove item from inventory");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("This item is not a equipable item ! : " + item.ItemType.ToString());
+        }
+    }
 
     public void UseConsumable(Item item, int slot, bool deleteItem)
     {
-        if(item.TypeItem == Item.Type.consumable)
+        if(item.ItemType == Item.ItemTypes.consumable)
         {
             Debug.Log("USED CONSUMABLE : " + item.Title);
             ItemData data = slots[slot].transform.GetChild(0).GetComponent<ItemData>();
@@ -143,7 +192,7 @@ public class Inventory : MonoBehaviour {
             data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
 
             Debug.Log("Consumed => do stuff");
-            DoConsumed(item);
+            Inventory.Instance.ConsumeItem(item);
 
             if (deleteItem)
             {
@@ -153,21 +202,14 @@ public class Inventory : MonoBehaviour {
             }
         } else
         {
-            Debug.LogWarning("This item is not a consumable ! : " + item.TypeItem.ToString());
+            Debug.LogWarning("This item is not a consumable ! : " + item.ItemType.ToString());
         }
     }
 
-    private void DoConsumed(Item item)
-    {
-        switch (item.ID)
-        {
-            case 2:
-                Debug.Log("Will do: " + item.Effect);
-                break;
-            default:
-                break;
-        }
-    }
+
+
+
+
 
     public bool CheckIfItemIsInInventory(Item item)
     {
