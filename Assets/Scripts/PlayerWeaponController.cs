@@ -41,7 +41,8 @@ public class PlayerWeaponController : MonoBehaviour {
 
     void UnequipWeapon()
     {
-        Inventory.Instance.AddItem(currentlyEquippedItem);
+        Debug.Log("Adding Unequipped weapon back to inventory : " + currentlyEquippedItem.Slug);
+        Inventory.Instance.AddItem(currentlyEquippedItem.Slug);
         characterStats.RemoveStatBonus(equippedWeapon.Stats);
         Destroy(EquippedWeapon.transform.gameObject);
         UIEventHandler.StatsChanged();

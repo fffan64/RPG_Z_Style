@@ -1,0 +1,142 @@
+[
+	{
+		"id": 0,
+		"itemType": "armor",
+		"title": "Amulet of Prayers",
+		"description": "An amulet enchanted by prayers",
+		"value": 6,
+		"Stats": [
+			{
+				"StatType": "Power",
+				"BaseValue": 10,
+				"StatName": "Power"
+			},
+			{
+				"StatType": "Toughness",
+				"BaseValue": 10,
+				"StatName": "Tougness"
+			},
+			{
+				"StatType": "AttackSpeed",
+				"BaseValue": 10,
+				"StatName": "Atk Spd"
+			}
+		],
+		"stackable": false,
+		"rarity": 4,
+		"slug": "amulet_of_prayers",
+		"actionName": "Equip",
+		"itemModifier": 0
+	},
+	{
+		"id": 1,
+		"itemType": "armor",
+		"title": "White Shirt",
+		"description": "A shirt that is white",
+		"value": 2,
+		"Stats": [
+			{
+				"StatType": "Power",
+				"BaseValue": 0,
+				"StatName": "Power"
+			},
+			{
+				"StatType": "Toughness",
+				"BaseValue": 5,
+				"StatName": "Tougness"
+			},
+			{
+				"StatType": "AttackSpeed",
+				"BaseValue": 10,
+				"StatName": "Atk Spd"
+			}
+		],
+		"stackable": true,
+		"rarity": 1,
+		"slug": "white_shirt",
+		"actionName": "Equip",
+		"itemModifier": 0
+	},
+	{
+		"id": 2,
+		"itemType": "consumable",
+		"title": "Power Potion",
+		"description": "A potion that temporary increase your power",
+		"value": 3,
+		"stackable": true,
+		"rarity": 0,
+		"slug": "power_potion",
+		"actionName": "Drink",
+		"itemModifier": 0
+	},
+	{
+		"id": 3,
+		"itemType": "weapon",
+		"title": "Ordinary Sword",
+		"description": "An ordinary sword",
+		"value": 1,
+		"Stats": [
+			{
+				"StatType": "Power",
+				"BaseValue": 25,
+				"StatName": "Power"
+			},
+			{
+				"StatType": "Toughness",
+				"BaseValue": 4,
+				"StatName": "Tougness"
+			},
+			{
+				"StatType": "AttackSpeed",
+				"BaseValue": 4,
+				"StatName": "Atk Spd"
+			}
+		],
+		"stackable": true,
+		"rarity": 0,
+		"slug": "sword_ordinary",
+		"actionName": "Equip",
+		"itemModifier": 0
+	},
+	{
+		"id": 4,
+		"itemType": "consumable",
+		"title": "Log Potion",
+		"description": "A potion that logs something to the console",
+		"value": 1,
+		"stackable": true,
+		"rarity": 0,
+		"slug": "potion_log",
+		"actionName": "Drink",
+		"itemModifier": 0
+	},
+	{
+		"id": 5,
+		"itemType": "weapon",
+		"title": "Fire Staff",
+		"description": "A Staff throwing fireball",
+		"value": 5,
+		"Stats": [
+			{
+				"StatType": "Power",
+				"BaseValue": 20,
+				"StatName": "Power"
+			},
+			{
+				"StatType": "Toughness",
+				"BaseValue": 1,
+				"StatName": "Tougness"
+			},
+			{
+				"StatType": "AttackSpeed",
+				"BaseValue": 10,
+				"StatName": "Atk Spd"
+			}
+		],
+		"stackable": true,
+		"rarity": 4,
+		"slug": "staff_fire",
+		"actionName": "Equip",
+		"itemModifier": 0
+	}
+]

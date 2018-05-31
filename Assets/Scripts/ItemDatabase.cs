@@ -1,24 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LitJson;
 using System.IO;
 using System.Linq;
 using System;
+using Newtonsoft.Json;
 
 public class ItemDatabase : MonoBehaviour {
     public static ItemDatabase Instance { get; set; }
-    private List<Item> database = new List<Item>();
+    public List<Item> Items { get; set; }
 
     public Sprite[] allSpritesIcons { get; set; }
-
-    internal Item FetchItemBySlug(string itemSlug)
-    {
-        return database.FirstOrDefault(x => x.Slug == itemSlug);
-    }
-
-    private JsonData itemdData;
-
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -27,27 +20,34 @@ public class ItemDatabase : MonoBehaviour {
             Instance = this;
 
         allSpritesIcons = Resources.LoadAll<Sprite>("Item Icons/");
-
-
-        string sJSON = File.ReadAllText(Application.dataPath + "/StreamingAssets/items.json");
-        itemdData = JsonMapper.ToObject(sJSON);
-        ConstructItemDatabase();
+        
+        BuildDatabase();
     }
 
     public Item FetchItemByID(int id)
     {
-        return database.FirstOrDefault(x => x.ID == id);
-    }
-
-    void ConstructItemDatabase()
-    {
-        for(int i = 0; i < itemdData.Count; i++)
+        Item item = Items.FirstOrDefault(x => x.ID == id);
+        if (item == null)
         {
-            database.Add(new Item((int)itemdData[i]["id"], (Item.Type)System.Enum.Parse(typeof(Item.Type), itemdData[i]["type"].ToString(), true), itemdData[i]["title"].ToString(), itemdData[i]["description"].ToString(), (int)itemdData[i]["value"],
-                (int)itemdData[i]["stats"]["power"], (int)itemdData[i]["stats"]["defence"], (int)itemdData[i]["stats"]["vitality"], (bool)itemdData[i]["stackable"], (int)itemdData[i]["rarity"], itemdData[i]["slug"].ToString(), new List<BaseStat>()
-                ));
+            Debug.LogWarning("Item with id [" + id + "] not found !");
         }
+        return item;
     }
 
-    public List<Item> items = new List<Item>();
+    public Item FetchItemBySlug(string itemSlug)
+    {
+        Item item = Items.FirstOrDefault(x => x.Slug == itemSlug);
+        if(item == null)
+        {
+            Debug.LogWarning("Item with slug [" + itemSlug + "] not found !");
+        }
+        return item;
+    }
+
+
+    void BuildDatabase()
+    {
+        Items = JsonConvert.DeserializeObject<List<Item>>(Resources.Load<TextAsset>("JSON/Items").ToString());
+    }
+
 }

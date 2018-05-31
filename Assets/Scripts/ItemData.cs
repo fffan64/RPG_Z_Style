@@ -31,7 +31,7 @@ public class ItemData : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDr
                 GetComponent<CanvasGroup>().blocksRaycasts = false;
             } else if (eventData.button == PointerEventData.InputButton.Right)
             {
-                if(item.TypeItem == Item.Type.consumable)
+                if (item.ItemType == Item.ItemTypes.consumable)
                 {
                     if (amount > 1)
                     {
@@ -41,9 +41,21 @@ public class ItemData : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDr
                     {
                         inv.UseConsumable(item, slot, true);
                     }
-                } else
+                }
+                else if (item.ItemType == Item.ItemTypes.armor || item.ItemType == Item.ItemTypes.weapon)
                 {
-                    Debug.Log("Item clicked is of type: " + item.TypeItem.ToString());
+                    if (amount > 1)
+                    {
+                        inv.Equip(item, slot, false);
+                    }
+                    else
+                    {
+                        inv.Equip(item, slot, true);
+                    }
+                }
+                else
+                {
+                    Debug.Log("Item clicked is of type: " + item.ItemType.ToString());
                 }
             }            
         }

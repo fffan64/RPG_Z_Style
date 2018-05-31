@@ -36,7 +36,7 @@ TextureImporter:
     21300062: Items_RPG_34x34icons_31
     21300064: Items_RPG_34x34icons_32
     21300066: Items_RPG_34x34icons_33
-    21300068: Items_RPG_34x34icons_34
+    21300068: potion_log
     21300070: Items_RPG_34x34icons_35
     21300072: Items_RPG_34x34icons_36
     21300074: Items_RPG_34x34icons_37
@@ -1215,7 +1215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Items_RPG_34x34icons_34
+      name: potion_log
       rect:
         serializedVersion: 2
         x: 204

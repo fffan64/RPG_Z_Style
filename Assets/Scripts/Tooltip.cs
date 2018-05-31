@@ -40,21 +40,21 @@ public class Tooltip : MonoBehaviour {
         data = "<color=#215cba><b>" + item.Title + "</b></color>\n\n" + item.Description + "\n\n<color=#ba7720>";
 
         string sType = "";
-        switch (item.TypeItem)
+        switch (item.ItemType)
         {
-            case Item.Type.weapon:
+            case Item.ItemTypes.weapon:
                 sType = "Weapon";
                 data += "<i>Power: " + item.Power + "</i></color>";
                 break;
-            case Item.Type.armor:
+            case Item.ItemTypes.armor:
                 sType = "Armor";
                 data += "<i>Defence: " + item.Defence + "</i></color>";
                 break;
-            case Item.Type.consumable:
+            case Item.ItemTypes.consumable:
                 sType = "Consumable";
                 data += "<i>Effect: " + item.Effect + "</i></color>";
                 break;
-            case Item.Type.quest:
+            case Item.ItemTypes.quest:
                 sType = "Quest";
                 data += "<i>Spec. : " + item.Special + "</i></color>";
                 break;

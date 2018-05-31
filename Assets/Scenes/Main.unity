@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 192465750}
   - component: {fileID: 192465744}
   - component: {fileID: 192465752}
+  - component: {fileID: 192465751}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -500,6 +501,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fixEveryFrame: 1
+--- !u!114 &192465751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 192465742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 198e55a09e747064291c0e50077a6430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &192465752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2263,8 +2275,8 @@ GameObject:
   m_Component:
   - component: {fileID: 824009452}
   - component: {fileID: 824009453}
-  - component: {fileID: 824009451}
   - component: {fileID: 824009454}
+  - component: {fileID: 824009451}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -2289,6 +2301,7 @@ MonoBehaviour:
     type: 2}
   slots: []
   playerWeaponController: {fileID: 192465752}
+  consumableController: {fileID: 192465751}
 --- !u!4 &824009452
 Transform:
   m_ObjectHideFlags: 0
