@@ -142,11 +142,6 @@ public class Inventory : MonoBehaviour {
         UIEventHandler.ItemAddedToInventory(itemToAdd);
     }
     
-    public void SetItemDetails(Item item, Button selectedButton)
-    {
-        //inventoryDetailsPanel.SetItem(item, selectedButton);
-    }
-
     public void EquipItem(Item itemToEquip)
     {
         playerWeaponController.EquipWeapon(itemToEquip);

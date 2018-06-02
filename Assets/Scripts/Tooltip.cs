@@ -19,7 +19,14 @@ public class Tooltip : MonoBehaviour {
     {
         if (tooltip.activeSelf)
         {
-            tooltip.transform.position = Input.mousePosition; 
+            if (tooltip.activeInHierarchy)
+            {
+                tooltip.transform.position = Input.mousePosition;
+            }
+            else
+            {
+                Deactivate();
+            }
         }
     }
 
@@ -40,23 +47,36 @@ public class Tooltip : MonoBehaviour {
         data = "<color=#215cba><b>" + item.Title + "</b></color>\n\n" + item.Description + "\n\n<color=#ba7720>";
 
         string sType = "";
+
+        if (item.Stats != null)
+        {
+            foreach (BaseStat stat in item.Stats)
+            {
+                data += "<i>" + stat.StatName + ": " + stat.BaseValue + "\n</i>";
+            }
+        }
+        data += "</color>";
+
+
+
+
         switch (item.ItemType)
         {
             case Item.ItemTypes.weapon:
                 sType = "Weapon";
-                data += "<i>Power: " + item.Power + "</i></color>";
+                //data += "<i>Power: " + item.Power + "</i></color>";
                 break;
             case Item.ItemTypes.armor:
                 sType = "Armor";
-                data += "<i>Defence: " + item.Defence + "</i></color>";
+                //data += "<i>Defence: " + item.Defence + "</i></color>";
                 break;
             case Item.ItemTypes.consumable:
                 sType = "Consumable";
-                data += "<i>Effect: " + item.Effect + "</i></color>";
+                //data += "<i>Effect: " + item.Effect + "</i></color>";
                 break;
             case Item.ItemTypes.quest:
                 sType = "Quest";
-                data += "<i>Spec. : " + item.Special + "</i></color>";
+                //data += "<i>Spec. : " + item.Special + "</i></color>";
                 break;
             default:
                 break;
@@ -64,6 +84,7 @@ public class Tooltip : MonoBehaviour {
         
         tooltip.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = data;
         tooltip.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = sType;
+        tooltip.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = item.ActionName;
 
         Image img = tooltip.transform.GetChild(0).GetComponent<Image>();
         Color col = Color.white;
