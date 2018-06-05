@@ -82,6 +82,13 @@ public class Inventory : MonoBehaviour {
         if (Input.GetButtonDown("Inventory"))
         {
             show = !show;
+            if(show)
+            {
+                AudioManager.instance.Play("Inventory_Open");
+            } else
+            {
+                AudioManager.instance.Play("Inventory_Close");
+            }
             ShowInventory(show);
         }
     }
@@ -89,6 +96,15 @@ public class Inventory : MonoBehaviour {
     private void ShowInventory(bool show)
     {
         inventoryPanel.SetActive(show);
+    }
+
+    public void AddItem(string slug, int number)
+    {
+        Item itemToAdd = ItemDatabase.Instance.FetchItemBySlug(slug);
+        for (int i = 0; i < number; i++)
+        {
+            DoAddItem(itemToAdd);
+        }
     }
 
     public void AddItem(string slug)
@@ -105,6 +121,7 @@ public class Inventory : MonoBehaviour {
 
     public void DoAddItem(Item itemToAdd)
     {
+        AudioManager.instance.Play("PickUp");
         if (itemToAdd.Stackable && CheckIfItemIsInInventory(itemToAdd))
         {
             for (int i = 0; i < items.Count; i++)
@@ -174,6 +191,25 @@ public class Inventory : MonoBehaviour {
         else
         {
             Debug.LogWarning("This item is not a equipable item ! : " + item.ItemType.ToString());
+        }
+    }
+
+    public void UseConsumable(string slug)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].Slug == slug)
+            {
+                if(Inventory.Instance.slots[i].transform.GetChild(0).GetComponent<ItemData>().amount > 1)
+                {
+                    UseConsumable(ItemDatabase.Instance.FetchItemBySlug(slug), i, false);
+                }
+                else
+                {
+                    UseConsumable(ItemDatabase.Instance.FetchItemBySlug(slug), i, true);
+                }
+                break;
+            }
         }
     }
 

@@ -81,7 +81,7 @@ public class Staff : MonoBehaviour, IWeapon, IProjectileWeapon
         if (triggeredNormalAttack && !attacking)
         {
             animator.SetTrigger("attacking");
-            FindObjectOfType<AudioManager>().PlayRandom("Sword_attack_1", "Sword_attack_2", "Sword_attack_3");
+            AudioManager.instance.Play("Staff_Fire_Attack");
         }
 
         if (playerScript.mov != Vector2.zero)

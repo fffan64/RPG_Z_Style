@@ -77,7 +77,7 @@ public class Sword : MonoBehaviour, IWeapon
         if (triggeredNormalAttack && !attacking)
         {
             animator.SetTrigger("attacking");
-            FindObjectOfType<AudioManager>().PlayRandom("Sword_attack_1", "Sword_attack_2", "Sword_attack_3");
+            AudioManager.instance.PlayRandom("Sword_attack_1", "Sword_attack_2", "Sword_attack_3");
         }
 
         if (playerScript.mov != Vector2.zero)

@@ -31,20 +31,22 @@ public class PickUp : MonoBehaviour {
             {
                 case TypePickup.HP_REPLENISH:
                     col.SendMessage("SetReplenishHP", amount);
-                    FindObjectOfType<AudioManager>().Play("Heart");
+                    AudioManager.instance.Play("Heart");
                     break;
                 case TypePickup.COIN:
                     col.SendMessage("SetAddCoin", amount);
-                    FindObjectOfType<AudioManager>().Play("Coin");
+                    AudioManager.instance.Play("Coin");
                     break;
                 case TypePickup.BOMB:
-                    List<object> temp = new List<object>
+                    /*List<object> temp = new List<object>
                     {
                         TypePickup.BOMB,
                         amount
                     };
                     col.SendMessage("AddToInventory", temp);
-                    FindObjectOfType<AudioManager>().Play("PickUp");
+                    */
+
+                    Inventory.Instance.AddItem("bomb", amount);
                     break;
                 case TypePickup.OTHER:
                     Inventory.Instance.AddItem(item.ID);

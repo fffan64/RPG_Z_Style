@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemData : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler {
+public class ItemData : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler {
 
     public Item item;
     public int amount;
@@ -25,6 +25,7 @@ public class ItemData : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDr
         {
             if(eventData.button == PointerEventData.InputButton.Left)
             {
+                AudioManager.instance.Play("Inventory_DragStart");
                 offset = eventData.position - new Vector2(transform.position.x, transform.position.y);
                 transform.SetParent(transform.parent.parent);
                 transform.position = eventData.position - offset;
@@ -69,11 +70,21 @@ public class ItemData : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDr
         }
     }
 
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        /*transform.SetParent(inv.slots[slot].transform);
+        transform.position = inv.slots[slot].transform.position;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        */
+        OnEndDrag(eventData);
+    }
+
     public void OnEndDrag(PointerEventData eventData)
     {
         transform.SetParent(inv.slots[slot].transform);
         transform.position = inv.slots[slot].transform.position;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
+        AudioManager.instance.Play("Inventory_DragStop");
     }
 
     public void OnPointerEnter(PointerEventData eventData)

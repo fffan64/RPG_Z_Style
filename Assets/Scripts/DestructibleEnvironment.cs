@@ -30,7 +30,7 @@ public class DestructibleEnvironment : MonoBehaviour {
             {
                 GetComponent<Animator>().Play(destroyAnimName);
             }
-            FindObjectOfType<AudioManager>().Play(destroySoundName);
+            AudioManager.instance.Play(destroySoundName);
             destroyed = true;
         }
     }

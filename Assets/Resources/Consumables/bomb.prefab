@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114929029327969724}
   - component: {fileID: 58696883679884062}
   m_Layer: 8
-  m_Name: Bomb
+  m_Name: bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 2.5
   areaOfEffect: 2
-  damage: 1
+  damage: 5
   whatIsDestructible:
   - serializedVersion: 2
     m_Bits: 1024

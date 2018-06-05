@@ -68,11 +68,11 @@ public class GameManager : MonoBehaviour {
     IEnumerator DoTransitionMainMenuToGame()
     {
         transitionAnim.SetTrigger("fadeIn");
-        FindObjectOfType<AudioManager>().Stop("MainMenuTheme");
+        AudioManager.instance.Stop("MainMenuTheme");
         mainMenuUI.SetActive(false);
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        FindObjectOfType<AudioManager>().Play("Theme_1");
+        AudioManager.instance.Play("Theme_1");
         hudPlayer.SendMessage("ShowHUD");
         transitionAnim.SetTrigger("fadeOut");
     }
@@ -101,8 +101,8 @@ public class GameManager : MonoBehaviour {
 
     public void Resume()
     {
-        FindObjectOfType<AudioManager>().Play("UI_UnPause");
-        FindObjectOfType<AudioManager>().Play("Theme_1");
+        AudioManager.instance.Play("UI_UnPause");
+        AudioManager.instance.Play("Theme_1");
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
@@ -110,8 +110,8 @@ public class GameManager : MonoBehaviour {
 
     public void Pause()
     {
-        FindObjectOfType<AudioManager>().Pause("Theme_1");
-        FindObjectOfType<AudioManager>().Play("UI_Pause");
+        AudioManager.instance.Pause("Theme_1");
+        AudioManager.instance.Play("UI_Pause");
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
@@ -125,10 +125,10 @@ public class GameManager : MonoBehaviour {
             StartCoroutine(DoTransitionToMainMenu());
         } else
         {
-            FindObjectOfType<AudioManager>().StopGlobal();
+            AudioManager.instance.StopGlobal();
             hudPlayer.SendMessage("HideHUD");
             SceneManager.LoadScene(0);
-            FindObjectOfType<AudioManager>().Play("MainMenuTheme");
+            AudioManager.instance.Play("MainMenuTheme");
             mainMenuUI.SetActive(true);
         }
     }
@@ -137,11 +137,11 @@ public class GameManager : MonoBehaviour {
     {
         transitionAnim.SetTrigger("fadeIn");
         Resume();
-        FindObjectOfType<AudioManager>().StopGlobal();
+        AudioManager.instance.StopGlobal();
         yield return new WaitForSeconds(transitionTime);
         hudPlayer.SendMessage("HideHUD");
         SceneManager.LoadScene(0);
-        FindObjectOfType<AudioManager>().Play("MainMenuTheme");
+        AudioManager.instance.Play("MainMenuTheme");
         mainMenuUI.SetActive(true);
         transitionAnim.SetTrigger("fadeOut");
     }

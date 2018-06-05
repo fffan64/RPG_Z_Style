@@ -148,7 +148,7 @@ public class Enemy_Log : MonoBehaviour, IEnemy {
         if(target != initialPosition && projPrefab != null)
         {
             Instantiate(projPrefab, transform.position, transform.rotation).SendMessage("SetDamage", damage);
-            FindObjectOfType<AudioManager>().Play("Shot");
+            AudioManager.instance.Play("Shot");
             yield return new WaitForSeconds(seconds);
         }
         attacking = false;
@@ -169,7 +169,7 @@ public class Enemy_Log : MonoBehaviour, IEnemy {
         Debug.Log("DESTROY ENEMY LOG!");
         defeated = true;
         anim.Play("Enemy_Log_Defeated");
-        FindObjectOfType<AudioManager>().Play("Poof");
+        AudioManager.instance.Play("Poof");
 
 
         // Pasados los segundos de espera desactivamos los colliders 2D
@@ -212,9 +212,14 @@ public class Enemy_Log : MonoBehaviour, IEnemy {
         StartCoroutine(DoDestroy());
     }
 
+    public void Attacked(int amount)
+    {
+        TakeDamage(amount);
+    }
+
     public void TakeDamage(int amount)
     {
-        FindObjectOfType<AudioManager>().Play("Enemy_Log_Hurt");
+        AudioManager.instance.Play("Enemy_Log_Hurt");
         hp -= amount;
         if (hp <= 0)
         {

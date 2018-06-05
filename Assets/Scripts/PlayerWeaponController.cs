@@ -34,6 +34,7 @@ public class PlayerWeaponController : MonoBehaviour {
         currentlyEquippedItem = itemToEquip;
         EquippedWeapon.transform.SetParent(playerHand.transform);
         characterStats.AddStatBonus(itemToEquip.Stats);
+        AudioManager.instance.Play("Equip_Weapon");
         UIEventHandler.ItemEquipped(itemToEquip);
         UIEventHandler.StatsChanged();
 

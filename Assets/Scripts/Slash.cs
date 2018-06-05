@@ -15,7 +15,7 @@ public class Slash : MonoBehaviour {
 
     private void Awake()
     {
-        FindObjectOfType<AudioManager>().Play("Sword_Magic");
+        AudioManager.instance.Play("Sword_Magic");
     }
 
     // Update is called once per frame
@@ -52,7 +52,7 @@ public class Slash : MonoBehaviour {
             {
                 col.SendMessage("TakeDamage", damage);
             }
-            FindObjectOfType<AudioManager>().Stop("Sword_Magic");
+            AudioManager.instance.Stop("Sword_Magic");
             Destroy(gameObject);
         }
     }
@@ -60,13 +60,13 @@ public class Slash : MonoBehaviour {
     IEnumerator DoDestroy()
     {
         yield return new WaitForSeconds(waitBeforeDestroy);
-        FindObjectOfType<AudioManager>().Stop("Sword_Magic");
+        AudioManager.instance.Stop("Sword_Magic");
         Destroy(gameObject);
     }
 
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
-        FindObjectOfType<AudioManager>().Stop("Sword_Magic");
+        AudioManager.instance.Stop("Sword_Magic");
     }
 }

@@ -122,18 +122,19 @@ public class Player : MonoBehaviour {
 
     public void PlayFootStepLeft()
     {
-        FindObjectOfType<AudioManager>().Play("Footstep1");
+        AudioManager.instance.Play("Footstep1");
     }
     public void PlayFootStepRight()
     {
-        FindObjectOfType<AudioManager>().Play("Footstep2");
+        AudioManager.instance.Play("Footstep2");
     }
 
     void BombAttack()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B) && Inventory.Instance.CheckIfItemWithSlugIsInInventory("bomb"))
         {
-            Instantiate(bomb, transform.position + (new Vector3(prevMov.x, prevMov.y, 0)).normalized * distanceFromPlayerSpawn, Quaternion.identity);
+            Inventory.Instance.UseConsumable("bomb");
+            //Instantiate(bomb, transform.position + (new Vector3(prevMov.x, prevMov.y, 0)).normalized * distanceFromPlayerSpawn, Quaternion.identity);
         }
     }
     
@@ -167,7 +168,7 @@ public class Player : MonoBehaviour {
         if(xp >= levelUpXpNeeded[level])
         {
             level++;
-            FindObjectOfType<AudioManager>().Play("UI_LevelUp");
+            AudioManager.instance.Play("UI_LevelUp");
             hudPlayer.GetComponent<Animator>().SetTrigger("levelup");
             hudPlayer.GetComponent<HUD>().SetLevel(level);
         }
@@ -187,7 +188,7 @@ public class Player : MonoBehaviour {
     {
         hpChanged = true;
         hp -= damage;
-        FindObjectOfType<AudioManager>().Play("Player_Hurt");
+        AudioManager.instance.Play("Player_Hurt");
         GetComponent<BlinkingFX>().startBlinking = true;
         if (hp <= 0)
         {
@@ -217,6 +218,7 @@ public class Player : MonoBehaviour {
         coinChanged = true;
     }
 
+    /*
     public void AddToInventory(List<object> list)
     {
         PickUp.TypePickup type = (PickUp.TypePickup)list[0];
@@ -231,6 +233,7 @@ public class Player : MonoBehaviour {
                 break;
         }
     }
+    */
 
     public void BlockAllUpdate()
     {

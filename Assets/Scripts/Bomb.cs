@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour {
+public class Bomb : MonoBehaviour, IConsumable {
 
     public float timer;
     public float areaOfEffect;
@@ -41,7 +41,7 @@ public class Bomb : MonoBehaviour {
             {
                 Instantiate(effect, transform.position, Quaternion.identity);
             }
-            FindObjectOfType<AudioManager>().Play("Bomb");
+            AudioManager.instance.Play("Bomb");
             GetComponent<Animator>().Play("Bomb_Explode");
             explosed = true;
         } else
@@ -69,5 +69,17 @@ public class Bomb : MonoBehaviour {
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, areaOfEffect);
+    }
+
+    public void Consume()
+    {
+        Debug.Log("Dropped Bomb !");
+        transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
+    }
+
+    public void Consume(CharacterStats stats)
+    {
+        Debug.Log("Dropped Bomb !");
+        transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
     }
 }

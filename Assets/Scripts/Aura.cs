@@ -17,14 +17,14 @@ public class Aura : MonoBehaviour {
 
     public void AuraStart()
     {
-        FindObjectOfType<AudioManager>().Play("Sword_Charging");
+        AudioManager.instance.Play("Sword_Charging");
         manager = StartCoroutine(Manager());
         anim.Play("Aura_Idle");
     }
 
     public void AuraStop()
     {
-        FindObjectOfType<AudioManager>().Stop("Sword_Charging");
+        AudioManager.instance.Stop("Sword_Charging");
         StopCoroutine(manager);
         anim.Play("Aura_Idle");
         loaded = false;
@@ -35,7 +35,7 @@ public class Aura : MonoBehaviour {
         yield return new WaitForSeconds(waitBeforePlay);
         anim.Play("Aura_Play");
         loaded = true;
-        FindObjectOfType<AudioManager>().Play("Sword_Magic_Ready");
+        AudioManager.instance.Play("Sword_Magic_Ready");
     }
 
     public bool IsLoaded()

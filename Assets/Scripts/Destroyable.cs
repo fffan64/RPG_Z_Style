@@ -31,7 +31,7 @@ public class Destroyable : MonoBehaviour {
     {
         // Reproducimos la animación de destrucción y esperamos
         anim.Play(destroyState);
-        FindObjectOfType<AudioManager>().PlayRandom(destroySoundNames);
+        AudioManager.instance.PlayRandom(destroySoundNames);
         yield return new WaitForSeconds(timeForDisable);
 
         // Pasados los segundos de espera desactivamos los colliders 2D
