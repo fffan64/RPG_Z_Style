@@ -89,7 +89,10 @@ public class ItemData : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tooltip.Activate(item);
+        if(inv.slots[slot].GetComponent<Slot>().type == Slot.SlotType.Inventory)
+        {
+            tooltip.Activate(item);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)

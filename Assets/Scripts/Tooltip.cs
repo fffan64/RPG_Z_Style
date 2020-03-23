@@ -30,11 +30,14 @@ public class Tooltip : MonoBehaviour {
         }
     }
 
-    public void Activate(Item item)
+    public void Activate(Item item/*, Slot.SlotType slotType*/)
     {
-        this.item = item;
-        ConstructDataString();
-        tooltip.SetActive(true);
+        //if(slotType == Slot.SlotType.Inventory)
+        //{
+            this.item = item;
+            ConstructDataString();
+            tooltip.SetActive(true);
+        //}
     }
 
     public void Deactivate()

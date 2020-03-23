@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour {
     GameObject inventoryPanel;
     GameObject slotPanel;
     public GameObject inventorySlot;
+    public GameObject equipSlot;
     public GameObject inventoryItem;
 
     int slotAmount;
@@ -24,6 +25,14 @@ public class Inventory : MonoBehaviour {
     public PlayerWeaponController playerWeaponController;
     public ConsumableController consumableController;
 
+
+    GameObject equipPanel;
+    GameObject slotPanelEquip;
+
+    int slotAmountEquip;
+    public List<Item> itemsEquip = new List<Item>();
+    //public List<GameObject> slotsEquip = new List<GameObject>();
+
     private void Start()
     {
         if (Instance != null && Instance != this)
@@ -35,9 +44,13 @@ public class Inventory : MonoBehaviour {
         }
 
         slotAmount = 20;
+        slotAmountEquip = 5;
         inventoryPanel = GameObject.Find("Inventory Panel");
+        equipPanel = GameObject.Find("Equip Panel");
         slotPanel = inventoryPanel.transform.Find("Slot Panel").gameObject;
-        for(int i = 0; i < slotAmount; i++)
+        slotPanelEquip = equipPanel.transform.Find("Slot Panel Equip").gameObject;
+
+        for (int i = 0; i < slotAmount; i++)
         {
             items.Add(new Item());
             slots.Add(Instantiate(inventorySlot));
@@ -45,6 +58,26 @@ public class Inventory : MonoBehaviour {
             slots[i].transform.SetParent(slotPanel.transform);
             slots[i].transform.localScale = Vector3.one;
         }
+
+        /*
+        for (int i = slotAmount; i < slotAmount + slotAmountEquip; i++)
+        {
+            items.Add(new Item());
+            slots.Add(Instantiate(inventorySlot));
+            slots[i].GetComponent<Slot>().id = i;
+            slots[i].transform.SetParent(slotPanelEquip.transform);
+            slots[i].transform.localScale = Vector3.one;
+        }*/
+        for (int i = slotAmount; i < slotAmount + slotAmountEquip; i++)
+        {
+            itemsEquip.Add(new Item());
+            slots.Add(Instantiate(equipSlot));
+            slots[i].GetComponent<Slot>().id = i;
+            slots[i].transform.SetParent(slotPanelEquip.transform);
+            slots[i].transform.localScale = Vector3.one;
+        }
+
+
         AddItem(0);
         AddItem(0);
         AddItem(1);
@@ -96,6 +129,33 @@ public class Inventory : MonoBehaviour {
     private void ShowInventory(bool show)
     {
         inventoryPanel.SetActive(show);
+        equipPanel.SetActive(show);
+    }
+
+    public void AddItemToEquipSlot(string slug)
+    {
+        Item itemToAdd = ItemDatabase.Instance.FetchItemBySlug(slug);
+        AudioManager.instance.Play("PickUp");
+        
+        for (int i = 0; i < itemsEquip.Count; i++)
+        {
+            if (itemsEquip[i].ID == -1)
+            {
+            itemsEquip[i] = itemToAdd;
+                GameObject itemObj = Instantiate(inventoryItem);
+                ItemData iData = itemObj.GetComponent<ItemData>();
+                iData.item = itemToAdd;
+                iData.slot = slotAmount + i;
+                iData.amount = 1;
+                itemObj.transform.SetParent(slots[slotAmount + i].transform);
+                //itemObj.transform.SetParent(slotsEquip[i].transform);
+                itemObj.transform.localScale = Vector3.one;
+                itemObj.transform.localPosition = Vector3.zero;
+                itemObj.GetComponent<Image>().sprite = itemToAdd.Sprite;
+                itemObj.name = itemToAdd.Title;
+                break;
+            }
+        }
     }
 
     public void AddItem(string slug, int number)
@@ -158,7 +218,20 @@ public class Inventory : MonoBehaviour {
         }
         UIEventHandler.ItemAddedToInventory(itemToAdd);
     }
-    
+
+    public void RemoveItemFromEquipSlot(string slug)
+    {
+        Item itemToRemove = itemsEquip.FirstOrDefault(x => x.Slug == slug);
+        if(itemToRemove != null)
+        {
+            int index = itemsEquip.IndexOf(itemToRemove);
+            itemsEquip[index] = new Item();
+            Destroy(slots[slotAmount + index].transform.GetChild(0).gameObject);
+            //Destroy(slotsEquip[index].transform.GetChild(0).gameObject);
+            Debug.Log("Remove item from Equipment");
+        }
+    }
+
     public void EquipItem(Item itemToEquip)
     {
         playerWeaponController.EquipWeapon(itemToEquip);

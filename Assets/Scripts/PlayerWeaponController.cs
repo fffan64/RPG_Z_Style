@@ -38,6 +38,7 @@ public class PlayerWeaponController : MonoBehaviour {
         UIEventHandler.ItemEquipped(itemToEquip);
         UIEventHandler.StatsChanged();
 
+        Inventory.Instance.AddItemToEquipSlot(itemToEquip.Slug);
     }
 
     void UnequipWeapon()
@@ -47,6 +48,8 @@ public class PlayerWeaponController : MonoBehaviour {
         characterStats.RemoveStatBonus(equippedWeapon.Stats);
         Destroy(EquippedWeapon.transform.gameObject);
         UIEventHandler.StatsChanged();
+
+        Inventory.Instance.RemoveItemFromEquipSlot(currentlyEquippedItem.Slug);
     }
 
     private void Update()
